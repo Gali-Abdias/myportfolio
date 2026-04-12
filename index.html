@@ -3,188 +3,521 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Portfolio</title>
-
+  <title>Gali Abdias | Builder</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    :root {
+      --bg: #0a0a0a;
+      --card-bg: #111111;
+      --card-border: #262626;
+      --text-main: #f5f5f5;
+      --text-muted: #a3a3a3;
+      --sans: 'Inter', sans-serif;
+      --serif: 'Playfair Display', serif;
+      --script: 'Caveat', cursive;
     }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
 
     body {
-      font-family: Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text-muted);
+      font-family: var(--sans);
       line-height: 1.6;
-      color: #333;
-      background: #4138385d;
-      padding: 0 20px;
+      padding-bottom: 100px;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* Header & Navigation */
+    h1, h2, h3, .serif-txt {
+      font-family: var(--serif);
+      color: var(--text-main);
+      font-weight: 700;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 0 5%;
+    }
+
+    /* --- Navbar --- */
     header {
-      background: #5048c5;
-      color: #fff;
-      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 30px 0;
+      margin-bottom: 20px;
     }
 
-    header h1 {
-      display: inline;
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      filter: grayscale(50%) contrast(1.1);
+    }
+
+    .logo-text {
+      font-family: var(--sans);
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--text-main);
+      letter-spacing: -0.5px;
+    }
+
+    .logo-script {
+      font-family: var(--script);
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    nav {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 30px;
+      padding: 6px 8px;
     }
 
     nav ul {
+      display: flex;
       list-style: none;
-      float: right;
-    }
-
-    nav ul li {
-      display: inline;
-      margin-left: 20px;
+      gap: 5px;
     }
 
     nav ul li a {
-      color: #fff;
-      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      padding: 8px 16px;
+      border-radius: 20px;
+      transition: all 0.2s ease;
     }
 
-    /* Sections */
-    section {
-      padding: 40px 0;
-      max-width: 800px;
-      margin: auto;
+    nav ul li a:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-main);
     }
 
-    h2 {
+    .theme-toggle {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid var(--card-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+
+    /* --- Cards --- */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 40px;
+      margin-bottom: 24px;
+    }
+
+    /* --- Hero Card --- */
+    .hero-meta {
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: #666;
+    }
+
+    .hero-title {
+      font-size: clamp(3rem, 6vw, 4.5rem);
+      line-height: 1;
+      margin-bottom: 25px;
+      letter-spacing: -1px;
+    }
+
+    .hero-desc {
+      font-size: 1.05rem;
+      max-width: 650px;
+    }
+
+    /* --- Bio Card --- */
+    .bio-grid {
+      display: flex;
+      gap: 40px;
+      align-items: flex-start;
+    }
+
+    .bio-img {
+      width: 200px;
+      height: 250px;
+      border-radius: 16px;
+      object-fit: cover;
+      flex-shrink: 0;
+      filter: grayscale(30%) contrast(1.1);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    .bio-content { flex: 1; }
+
+    .bio-script {
+      font-family: var(--script);
+      font-size: 1.8rem;
+      color: var(--text-main);
+      margin-bottom: 15px;
+      line-height: 1.2;
+    }
+
+    .bio-text { margin-bottom: 15px; font-size: 0.95rem; }
+
+    .btn-group {
+      display: flex;
+      gap: 15px;
+      margin-top: 30px;
+    }
+
+    .btn {
+      padding: 10px 24px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary {
+      background: var(--text-main);
+      color: var(--bg);
+      border: 1px solid var(--text-main);
+    }
+
+    .btn-primary:hover { opacity: 0.9; }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-main);
+      border: 1px solid var(--card-border);
+    }
+
+    .btn-secondary:hover { background: rgba(255,255,255,0.05); }
+
+    /* --- Bento Grid --- */
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    .bento-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 30px;
+    }
+
+    .bento-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
       margin-bottom: 20px;
-      color: #222;
+      font-size: 1.5rem;
     }
 
-    /* About Section with Photo */
-    .about-container {
+    .bento-icon {
+      width: 24px;
+      height: 24px;
+      opacity: 0.8;
+      fill: none;
+      stroke: var(--text-main);
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .bento-list { list-style: none; font-size: 0.9rem; }
+    .bento-list li { margin-bottom: 12px; }
+
+    /* Tags Pill Box */
+    .tags-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .tag {
+      border: 1px solid #333;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-align: left;
+    }
+
+    /* --- Footer Status --- */
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 6px 16px;
+      font-size: 0.8rem;
+      margin: 40px auto;
+      background: var(--card-bg);
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background: #10b981;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #10b981;
+    }
+
+    .section-headline {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 30px;
+    }
+
+    /* --- Projects (Substituting Github Graph) --- */
+    .projects-container {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 40px;
+      text-align: center;
+    }
+    
+    .project-item {
+      text-align: left;
+      border-bottom: 1px solid var(--card-border);
+      padding: 20px 0;
+    }
+    
+    .project-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .project-item h3 {
+      font-family: var(--sans);
+      font-size: 1.1rem;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+
+    .project-item p {
+      font-size: 0.9rem;
+    }
+
+    /* --- Footer --- */
+    footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 60px;
+      padding-top: 20px;
+      border-top: 1px solid #1a1a1a;
+      font-size: 0.85rem;
+    }
+
+    .footer-left .script-quote {
+      font-family: var(--script);
+      font-size: 1.4rem;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .footer-right {
       display: flex;
       align-items: center;
       gap: 20px;
     }
 
-    .profile-pic {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 3px solid #222;
-    }
-
-    /* Projects */
-    .project-list {
-      display: grid;
-      gap: 20px;
-    }
-
-    .project {
-      background: #fff;
-      padding: 15px;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-
-    /* Skills */
-    .skills {
-      display: flex;
-      gap: 15px;
-      flex-wrap: wrap;
-    }
-
-    .skills li {
-      background: #222;
-      color: #fff;
-      padding: 8px 15px;
+    .contact-pill {
+      background: var(--text-main);
+      color: var(--bg);
+      padding: 8px 20px;
       border-radius: 20px;
+      font-weight: 600;
     }
 
-    /* Contact */
-    #contact {
-      text-align: center;
-    }
-
-    .email-link {
-      color: #222;
-      font-weight: bold;
-      text-decoration: none;
-    }
-
-    .email-link:hover {
-      text-decoration: underline;
-    }
-
-    /* Footer */
-    footer {
-      text-align: center;
-      padding: 20px;
-      background: #222;
-      color: #fff;
-      margin-top: 40px;
+    /* Responsive */
+    @media (max-width: 800px) {
+      .bento-grid { grid-template-columns: 1fr; }
+      .bio-grid { flex-direction: column; }
+      .bio-img { width: 100%; height: auto; max-height: 400px; }
+      nav { display: none; }
+      header { flex-direction: column; gap: 15px; align-items: flex-start; }
+      .hero-title { font-size: 2.5rem; }
+      footer { flex-direction: column; gap: 20px; align-items: flex-start; }
     }
   </style>
 </head>
 <body>
-  <header>
-    <nav>
-      <h1>My Portfolio</h1>
-      <ul>
-        <li><a href="#aboutMe">About</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </nav>
-  </header>
 
-  <!-- About Me with Photo -->
-  <section id="aboutMe">
-    <h2>About Me</h2>
-    <div class="about-container">
-      <img src="homepage.jpg" alt="My Photo" class="profile-pic" />
-      <p>
-        Hi! I'm Gali Abdias, an undergraduate student in Software Engineering at Adventist University of Central Africa, passionate about
-        building web design and full-stack impactful digital solutions.
+  <div class="container">
+    
+    <!-- Navbar -->
+    <header>
+      <div class="logo">
+        <img src="homepage.jpg" alt="Logo Avatar" class="logo-img" />
+        <div>
+          <span class="logo-text">Gali</span>
+          <span class="logo-script">engineered solutions</span>
+        </div>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#projects">Projects</a></li>
+        </ul>
+      </nav>
+      <button class="theme-toggle" aria-label="Toggle theme">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+      </button>
+    </header>
+
+    <!-- Card 1: Hero -->
+    <div id="about" class="card">
+      <div class="hero-meta">About the Builder</div>
+      <h1 class="hero-title">Gali Abdias.</h1>
+      <p class="hero-desc">
+        I build useful systems across software, data, and web. My work sits at the intersection of curiosity, discipline, and impact.
       </p>
     </div>
-  </section>
 
-  <!-- Projects -->
-  <section id="projects">
-    <h2>Projects</h2>
-    <div class="project-list">
-      <div class="project">
-        <h3>UCL Teams Competing Management System</h3>
-        <p>A Java Swing + RMI app for pharmacy management system.</p>
-      </div>
-      <div class="project">
-        <h3>Website for Mall System</h3>
-        <p>It’s basically a place where people can quickly grab what they need for the house without going to a big supermarket.</p>
+    <!-- Card 2: Bio Grid -->
+    <div class="card bio-grid">
+      <img src="homepage.jpg" alt="Gali Abdias" class="bio-img" />
+      <div class="bio-content">
+        <div class="bio-script">software engineer, rapid learner, problem-solver.</div>
+        <p class="bio-text">
+          I am an undergraduate student in Software Engineering at the Adventist University of Central Africa (AUCA). I focus on turning difficult ideas into clear implementations: from robust Java backends to clean, accessible web storefronts.
+        </p>
+        <p class="bio-text">
+          My long-term direction is simple: build technology that improves lives, mentor others coming behind me, and keep growing without losing integrity.
+        </p>
+        <div class="btn-group">
+          <a href="#projects" class="btn btn-primary">View Projects</a>
+          <a href="#skills" class="btn btn-secondary">Explore Skills</a>
+        </div>
       </div>
     </div>
-  </section>
 
-  <!-- Skills -->
-  <section id="skills">
-    <h2>Skills</h2>
-    <ul class="skills">
-      <li>HTML</li>
-      <li>CSS</li>
-      <li>JavaScript</li>
-      <li>Java</li>
-    </ul>
-  </section>
+    <!-- Bento Grid Section -->
+    <div id="skills" class="bento-grid">
+      
+      <!-- Education -->
+      <div class="bento-card">
+        <h2 class="bento-header serif-txt">
+          <svg class="bento-icon" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+          Education
+        </h2>
+        <ul class="bento-list">
+          <li>Software Engineering Bachelor's (in progress)</li>
+          <li>Adventist University of Central Africa</li>
+          <li>Hands-on learning in software design, algorithms, and full-stack logic</li>
+        </ul>
+      </div>
 
-  <!-- Contact -->
-  <section id="contact">
-    <h2>Contact</h2>
-    <p>You can reach me at:</p>
-    <p><a href="mailto:galiabdiasndaga@gmail.com" class="email-link">galiabdiasndaga@gmail.com</a></p>
-  </section>
+      <!-- Focus Areas -->
+      <div class="bento-card">
+        <h2 class="bento-header serif-txt">
+          <svg class="bento-icon" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+          Focus Areas
+        </h2>
+        <div class="tags-grid">
+          <div class="tag">Java OOP & RMI</div>
+          <div class="tag">Web Engineering</div>
+          <div class="tag">Vanilla JS / DOM</div>
+          <div class="tag">Software Design</div>
+          <div class="tag">HTML5 / CSS3</div>
+          <div class="tag">UI/UX Basics</div>
+        </div>
+      </div>
 
-  <footer>
-    <p>©️ 2025 Gali. Hosted on GitHub Pages.</p>
-  </footer>
+      <!-- How I Work -->
+      <div class="bento-card">
+        <h2 class="bento-header serif-txt">
+          <svg class="bento-icon" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+          How I Work
+        </h2>
+        <ul class="bento-list">
+          <li>Start from problem framing, then exact constraints.</li>
+          <li>Ship iteratively with quality checks.</li>
+          <li>Prefer clean, legible code over fragile complexity.</li>
+        <li>Document design decisions to keep architectures clear.</li>
+        </ul>
+      </div>
+
+      <!-- Mission -->
+      <div class="bento-card">
+        <h2 class="bento-header serif-txt">
+          <svg class="bento-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+          Mission
+        </h2>
+        <p class="bento-list">
+          Build technology that solves real-world problems, build applications that are reliable, and create impactful digital solutions through disciplined execution.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- Projects (Replacing GitHub Commit Section) -->
+    <div style="text-align: center;">
+      <div class="status-pill">
+        <div class="status-dot"></div> Always building
+      </div>
+    </div>
+
+    <div id="projects" class="projects-container">
+      <h2 class="section-headline serif-txt">Featured Systems</h2>
+      
+      <div class="project-item">
+        <h3>UCL Teams Competing Management System</h3>
+        <p>A comprehensive Java Swing + RMI application tailored for a high-intensity pharmacy management system context with full backend logic.</p>
+      </div>
+      
+      <div class="project-item">
+        <h3>Website for Mall System</h3>
+        <p>A highly accessible digital storefront designed so users can quickly grab what they need for their house without navigating a bloated supermarket UI.</p>
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-left">
+        <div class="script-quote">Humanity has come this far because of curiosity</div>
+        <div>© 2025 Gali Abdias. All rights reserved.</div>
+      </div>
+      <div class="footer-right">
+        <!-- SVG Icons for minimal social presence -->
+        <a href="#"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a>
+        <a href="mailto:galiabdiasndaga@gmail.com" class="contact-pill">
+          Contact
+        </a>
+      </div>
+    </footer>
+
+  </div>
+
 </body>
 </html>
