@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Portfolio</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background: #4138385d;
+      padding: 0 20px;
+    }
+
+    /* Header & Navigation */
+    header {
+      background: #5048c5;
+      color: #fff;
+      padding: 15px 20px;
+    }
+
+    header h1 {
+      display: inline;
+    }
+
+    nav ul {
+      list-style: none;
+      float: right;
+    }
+
+    nav ul li {
+      display: inline;
+      margin-left: 20px;
+    }
+
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    /* Sections */
+    section {
+      padding: 40px 0;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #222;
+    }
+
+    /* About Section with Photo */
+    .about-container {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .profile-pic {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #222;
+    }
+
+    /* Projects */
+    .project-list {
+      display: grid;
+      gap: 20px;
+    }
+
+    .project {
+      background: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    /* Skills */
+    .skills {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .skills li {
+      background: #222;
+      color: #fff;
+      padding: 8px 15px;
+      border-radius: 20px;
+    }
+
+    /* Contact */
+    #contact {
+      text-align: center;
+    }
+
+    .email-link {
+      color: #222;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .email-link:hover {
+      text-decoration: underline;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #222;
+      color: #fff;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <h1>My Portfolio</h1>
+      <ul>
+        <li><a href="#aboutMe">About</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- About Me with Photo -->
+  <section id="aboutMe">
+    <h2>About Me</h2>
+    <div class="about-container">
+      <img src="homepage.jpg" alt="My Photo" class="profile-pic" />
+      <p>
+        Hi! I'm Gali Abdias, an undergraduate student in Software Engineering at Adventist University of Central Africa, passionate about
+        building web design and full-stack impactful digital solutions.
+      </p>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section id="projects">
+    <h2>Projects</h2>
+    <div class="project-list">
+      <div class="project">
+        <h3>UCL Teams Competing Management System</h3>
+        <p>A Java Swing + RMI app for pharmacy management system.</p>
+      </div>
+      <div class="project">
+        <h3>Website for Mall System</h3>
+        <p>It’s basically a place where people can quickly grab what they need for the house without going to a big supermarket.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section id="skills">
+    <h2>Skills</h2>
+    <ul class="skills">
+      <li>HTML</li>
+      <li>CSS</li>
+      <li>JavaScript</li>
+      <li>Java</li>
+    </ul>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <h2>Contact</h2>
+    <p>You can reach me at:</p>
+    <p><a href="mailto:galiabdiasndaga@gmail.com" class="email-link">galiabdiasndaga@gmail.com</a></p>
+  </section>
+
+  <footer>
+    <p>©️ 2025 Gali. Hosted on GitHub Pages.</p>
+  </footer>
+</body>
+</html>
