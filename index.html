@@ -202,11 +202,25 @@
       padding: 6px 14px;
       border-radius: 8px;
       color: var(--text-muted);
-      transition: all 0.2s;
+      cursor: pointer;
+      transition: color 0.2s, background 0.2s;
     }
-    nav ul li a:hover {
-      color: var(--text);
+    nav ul li a:hover, nav ul li a.active-link {
       background: var(--surface-hover);
+      color: var(--text);
+    }
+    
+    /* === SPA ANIMATIONS === */
+    .page-section {
+      display: none;
+      animation: fadeIn 0.4s ease forwards;
+    }
+    .page-section.active-page {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
     .nav-contact-btn {
       font-family: var(--body);
@@ -890,10 +904,10 @@
       </div>
       <nav>
         <ul>
-          <li><a href="#hero">Home</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#skills">Skills</a></li>
-          <li><a href="#projects">Projects</a></li>
+          <li><a href="#hero" class="nav-link active-link">Home</a></li>
+          <li><a href="#about" class="nav-link">About</a></li>
+          <li><a href="#skills" class="nav-link">Skills</a></li>
+          <li><a href="#projects" class="nav-link">Projects</a></li>
         </ul>
       </nav>
       <div style="display:flex; align-items:center; gap:10px;">
@@ -907,7 +921,7 @@
   </div>
 
   <!-- ===== HERO ===== -->
-  <section class="hero" id="hero">
+  <section class="hero page-section active-page" data-page="hero" id="hero">
     <div class="wrapper">
       <div class="hero-grid">
         <div>
@@ -951,7 +965,7 @@
   </section>
 
   <!-- ===== ABOUT ===== -->
-  <section id="about">
+  <section id="about" class="page-section" data-page="about">
     <div class="wrapper">
       <div class="section-header-row" style="margin-bottom: 32px;">
         <div>
@@ -975,7 +989,7 @@
   </section>
 
   <!-- ===== HOW I WORK + MISSION ===== -->
-  <section>
+  <section class="page-section" data-page="about">
     <div class="wrapper">
       <div class="section-header-row" style="margin-bottom: 32px;">
         <div>
@@ -1069,7 +1083,7 @@
   </section>
 
   <!-- ===== SKILLS ===== -->
-  <section id="skills">
+  <section id="skills" class="page-section" data-page="skills">
     <div class="wrapper">
       <div class="section-header-row">
         <div>
@@ -1128,7 +1142,7 @@
   </section>
 
   <!-- ===== EXPERIENCE / EDUCATION ===== -->
-  <section>
+  <section class="page-section" data-page="about">
     <div class="wrapper">
       <div class="section-header-row">
         <div>
@@ -1174,11 +1188,11 @@
   </section>
 
   <!-- ===== PROJECTS ===== -->
-  <div class="status-row">
+  <div class="status-row page-section" data-page="projects">
     <div class="status-pill"><span class="status-dot"></span> Always building something new</div>
   </div>
 
-  <section id="projects">
+  <section id="projects" class="page-section" data-page="projects">
     <div class="wrapper">
       <div class="section-header-row">
         <div>
@@ -1308,7 +1322,7 @@
   </section>
 
   <!-- ===== CERTIFICATIONS & PROFILE ===== -->
-  <section>
+  <section class="page-section" data-page="about">
     <div class="wrapper">
       <div class="section-header-row" style="margin-bottom: 32px;">
         <div>
@@ -1429,6 +1443,65 @@
         }
       });
     }
+    // === SPA Navigation ===
+    function navigateToPage(pageId) {
+      // Hide all sections
+      document.querySelectorAll('.page-section').forEach(sec => {
+        sec.classList.remove('active-page');
+      });
+
+      // Show sections matching the pageId
+      const targetSections = document.querySelectorAll('.page-section[data-page="' + pageId + '"]');
+      if(targetSections.length > 0) {
+        targetSections.forEach(sec => sec.classList.add('active-page'));
+        window.scrollTo({ top: 0, behavior: 'instant' });
+      }
+
+      // Update Nav Link styling
+      document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.remove('active-link');
+        if(link.getAttribute('href') === '#' + pageId) {
+          link.classList.add('active-link');
+        }
+      });
+    }
+
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const pageId = this.getAttribute('href').substring(1);
+        navigateToPage(pageId);
+        history.pushState(null, null, '#' + pageId);
+      });
+    });
+
+    // Support Hero buttons to navigate to a page
+    document.querySelector('.btn-primary[href="#projects"]')?.addEventListener('click', function(e) {
+      e.preventDefault();
+      navigateToPage('projects');
+      history.pushState(null, null, '#projects');
+    });
+    document.querySelector('.btn-outline[href="#about"]')?.addEventListener('click', function(e) {
+      e.preventDefault();
+      navigateToPage('about');
+      history.pushState(null, null, '#about');
+    });
+
+    // Handle back/forward browser buttons
+    window.addEventListener('popstate', function() {
+      let hash = window.location.hash.substring(1);
+      if(!hash) hash = 'hero';
+      navigateToPage(hash);
+    });
+
+    // Initialize on load based on URL hash
+    window.addEventListener('DOMContentLoaded', () => {
+      let hash = window.location.hash.substring(1);
+      if(hash && document.querySelector('.page-section[data-page="' + hash + '"]')) {
+        navigateToPage(hash);
+      }
+    });
+
   </script>
 
 </body>
