@@ -27,6 +27,78 @@
       --heading: 'Outfit', sans-serif;
       --body: 'Inter', sans-serif;
       --mono: 'Space Mono', monospace;
+      --navbar-bg: rgba(3, 0, 15, 0.7);
+      --card-shadow: 0 16px 48px rgba(139, 92, 246, 0.12);
+    }
+
+    /* === LIGHT MODE === */
+    [data-theme="light"] {
+      --bg: #f5f3ff;
+      --surface: rgba(0, 0, 0, 0.03);
+      --surface-hover: rgba(0, 0, 0, 0.06);
+      --border: rgba(0, 0, 0, 0.1);
+      --border-glow: rgba(139, 92, 246, 0.35);
+      --text: #1a1033;
+      --text-muted: #4a4460;
+      --text-faint: #8b84a3;
+      --navbar-bg: rgba(245, 243, 255, 0.85);
+      --card-shadow: 0 16px 48px rgba(139, 92, 246, 0.08);
+    }
+    [data-theme="light"] .bg-canvas {
+      background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(139,92,246,.12), transparent),
+                  radial-gradient(ellipse 60% 60% at 80% 80%, rgba(236,72,153,.08), transparent),
+                  radial-gradient(ellipse 70% 50% at 10% 80%, rgba(6,182,212,.06), transparent),
+                  #f5f3ff;
+    }
+    [data-theme="light"] .bg-canvas::after {
+      background-image:
+        radial-gradient(circle at 25% 40%, rgba(139,92,246,.05) 0%, transparent 55%),
+        radial-gradient(circle at 75% 60%, rgba(236,72,153,.04) 0%, transparent 55%);
+    }
+    [data-theme="light"] .navbar {
+      background: var(--navbar-bg);
+      border-bottom-color: var(--border);
+    }
+    [data-theme="light"] .hero-title {
+      background: linear-gradient(135deg, #1a1033 0%, #6d28d9 50%, #a855f7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    [data-theme="light"] .hero-desc {
+      color: rgba(26, 16, 51, 0.7);
+    }
+    [data-theme="light"] .btn-outline {
+      border-color: var(--border);
+      color: var(--text);
+    }
+    [data-theme="light"] .glass {
+      background: rgba(255, 255, 255, 0.6);
+      border-color: rgba(0, 0, 0, 0.08);
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+    }
+    [data-theme="light"] .glass:hover {
+      box-shadow: 0 12px 40px rgba(139, 92, 246, 0.1);
+    }
+    [data-theme="light"] .skill-tag {
+      background: rgba(139, 92, 246, 0.08);
+      border-color: rgba(139, 92, 246, 0.2);
+      color: #7c3aed;
+    }
+    [data-theme="light"] .tech-badge { filter: saturate(1.2); }
+    [data-theme="light"] .footer {
+      border-top-color: var(--border);
+    }
+    [data-theme="light"] .status-pill {
+      background: rgba(16, 185, 129, 0.06);
+      border-color: rgba(16, 185, 129, 0.2);
+      color: #059669;
+    }
+    [data-theme="light"] .status-dot { background: #059669; box-shadow: 0 0 8px #059669; }
+    [data-theme="light"] .hero-badge {
+      background: rgba(139, 92, 246, 0.08);
+      border-color: rgba(139, 92, 246, 0.25);
+      color: #7c3aed;
     }
 
     /* ===========================
@@ -41,6 +113,7 @@
       font-size: 1rem;
       line-height: 1.75;
       -webkit-font-smoothing: antialiased;
+      transition: background 0.4s ease, color 0.4s ease;
     }
     a { text-decoration: none; color: inherit; }
     strong { color: var(--text); font-weight: 600; }
@@ -84,8 +157,9 @@
       position: sticky; top: 0; z-index: 100;
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      background: rgba(3, 0, 15, 0.7);
+      background: var(--navbar-bg);
       border-bottom: 1px solid var(--border);
+      transition: background 0.4s ease;
     }
     .navbar-inner {
       display: flex;
@@ -521,6 +595,86 @@
     .badge-html { background: rgba(239,68,68,.12);  border: 1px solid rgba(239,68,68,.3);  color: #fca5a5; }
     .badge-sql  { background: rgba(6,182,212,.12);  border: 1px solid rgba(6,182,212,.3);  color: #67e8f9; }
     .badge-rmi  { background: rgba(168,85,247,.12); border: 1px solid rgba(168,85,247,.3); color: #c4b5fd; }
+    .badge-android { background: rgba(52,211,153,.12); border: 1px solid rgba(52,211,153,.3); color: #6ee7b7; }
+    .badge-kotlin  { background: rgba(129,140,248,.12); border: 1px solid rgba(129,140,248,.3); color: #a5b4fc; }
+
+    /* === Project Status Badges === */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 100px;
+    }
+    .status-badge.completed {
+      background: rgba(16,185,129,.12);
+      border: 1px solid rgba(16,185,129,.3);
+      color: #6ee7b7;
+    }
+    .status-badge.in-progress {
+      background: rgba(251,191,36,.1);
+      border: 1px solid rgba(251,191,36,.3);
+      color: #fde68a;
+      animation: pulse-badge 2.5s ease-in-out infinite;
+    }
+    .status-badge .badge-icon { font-size: 0.6rem; }
+    @keyframes pulse-badge {
+      0%,100% { box-shadow: 0 0 0 0 rgba(251,191,36,0); }
+      50%      { box-shadow: 0 0 0 4px rgba(251,191,36,.15); }
+    }
+
+    /* === Filter Tabs === */
+    .filter-bar {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 36px;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      font-family: var(--body);
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 7px 18px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .filter-btn:hover {
+      background: var(--surface-hover);
+      color: var(--text);
+    }
+    .filter-btn.active {
+      background: rgba(168,85,247,.15);
+      border-color: rgba(168,85,247,.5);
+      color: #d8b4fe;
+    }
+    .filter-count {
+      background: rgba(255,255,255,.08);
+      border-radius: 100px;
+      padding: 1px 7px;
+      font-size: 0.7rem;
+    }
+    .filter-btn.active .filter-count {
+      background: rgba(168,85,247,.25);
+    }
+
+    /* === Project card hidden state === */
+    .project-card.hidden {
+      display: none;
+    }
+    .project-card {
+      transition: opacity 0.25s, transform 0.25s;
+    }
 
     /* ===========================
        CERTIFICATIONS & PROFILE (2-col)
@@ -668,6 +822,8 @@
       .skills-grid { grid-template-columns: 1fr 1fr; }
       .projects-grid { grid-template-columns: 1fr; }
       .info-columns { grid-template-columns: 1fr; }
+      .work-mission-grid { grid-template-columns: 1fr; }
+      .values-grid { grid-template-columns: 1fr 1fr; }
     }
     @media (max-width: 640px) {
       section { padding: 64px 0; }
@@ -675,7 +831,46 @@
       nav ul { display: none; }
       .about-strip { padding: 32px; }
       .section-header-row { flex-direction: column; align-items: flex-start; }
+      .values-grid { grid-template-columns: 1fr; }
     }
+    /* === Theme Toggle Button === */
+    .theme-toggle {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .theme-toggle:hover {
+      background: var(--surface-hover);
+      border-color: var(--border-glow);
+      color: var(--text);
+      transform: scale(1.05);
+    }
+    .theme-toggle svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: transform 0.4s ease, opacity 0.3s ease;
+    }
+    .theme-toggle .icon-sun { position: absolute; transform: rotate(90deg) scale(0); opacity: 0; }
+    .theme-toggle .icon-moon { position: absolute; }
+    [data-theme="light"] .theme-toggle .icon-sun { transform: rotate(0deg) scale(1); opacity: 1; }
+    [data-theme="light"] .theme-toggle .icon-moon { transform: rotate(-90deg) scale(0); opacity: 0; }
+
   </style>
 </head>
 <body>
@@ -687,7 +882,7 @@
   <div class="navbar">
     <div class="wrapper navbar-inner">
       <div class="nav-logo">
-        <img src="homepage.jpg" alt="Gali Abdias Ndaga" />
+        <img src="photo.png" alt="Gali Abdias Ndaga" />
         <div>
           <span class="nav-logo-name">Gali Ndaga</span>
           <span class="nav-logo-tag">Software Engineer</span>
@@ -701,7 +896,13 @@
           <li><a href="#projects">Projects</a></li>
         </ul>
       </nav>
-      <a href="mailto:galiabdiasndaga@yahoo.com" class="nav-contact-btn">Hire Me →</a>
+      <div style="display:flex; align-items:center; gap:10px;">
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle light/dark mode" onclick="toggleTheme()">
+          <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        </button>
+        <a href="mailto:galiabdiasndaga@yahoo.com" class="nav-contact-btn">Hire Me →</a>
+      </div>
     </div>
   </div>
 
@@ -725,7 +926,7 @@
           </div>
         </div>
         <div class="hero-photo-card glass">
-          <img src="homepage.jpg" alt="Gali Abdias Ndaga" class="hero-photo" />
+          <img src="photo.png" alt="Gali Abdias Ndaga" class="hero-photo" style="filter: none; border-radius: 14px;" />
           <div class="hero-stats">
             <div class="stat-chip">
               <span class="num">5+</span>
@@ -770,6 +971,100 @@
         </p>
         <a href="mailto:galiabdiasndaga@yahoo.com" class="btn-primary">Get in Touch →</a>
       </div>
+    </div>
+  </section>
+
+  <!-- ===== HOW I WORK + MISSION ===== -->
+  <section>
+    <div class="wrapper">
+      <div class="section-header-row" style="margin-bottom: 32px;">
+        <div>
+          <div class="section-kicker">My Approach</div>
+          <h2 class="section-title">How I Think & Build</h2>
+        </div>
+      </div>
+
+      <!-- Work + Mission row -->
+      <div class="work-mission-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:22px; margin-bottom:22px;">
+
+        <div class="glass about-strip">
+          <div class="about-mono-tag" style="display:flex; align-items:center; gap:8px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+            How I Work
+          </div>
+          <ul style="list-style:none; display:flex; flex-direction:column; gap:10px; margin-top:16px;">
+            <li style="font-size:0.95rem; display:flex; align-items:flex-start; gap:10px;">
+              <span style="color:var(--accent); font-size:0.7rem; margin-top:5px;">▸</span>
+              Start by deeply understanding the problem before writing a single line of code.
+            </li>
+            <li style="font-size:0.95rem; display:flex; align-items:flex-start; gap:10px;">
+              <span style="color:var(--accent); font-size:0.7rem; margin-top:5px;">▸</span>
+              Build iteratively — ship working pieces early and improve with feedback.
+            </li>
+            <li style="font-size:0.95rem; display:flex; align-items:flex-start; gap:10px;">
+              <span style="color:var(--accent); font-size:0.7rem; margin-top:5px;">▸</span>
+              Write clean, readable code. Simplicity beats clever complexity every time.
+            </li>
+            <li style="font-size:0.95rem; display:flex; align-items:flex-start; gap:10px;">
+              <span style="color:var(--accent); font-size:0.7rem; margin-top:5px;">▸</span>
+              Document decisions so the team always knows the "why" behind the "what".
+            </li>
+          </ul>
+        </div>
+
+        <div class="glass about-strip">
+          <div class="about-mono-tag" style="display:flex; align-items:center; gap:8px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+            Mission
+          </div>
+          <p style="font-size:1rem; line-height:1.85; margin-top:16px;">
+            Build reliable, high-quality software that <strong>solves real problems</strong> for real people.
+            I want to use technology to uplift communities — starting from Chad and Central Africa —
+            by creating systems that work, teaching others what I learn, and leading with integrity.
+            My goal is to be an engineer who <strong>builds with purpose</strong>, not just skill.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Core Values -->
+      <div class="glass about-strip" style="padding:40px;">
+        <h3 style="font-family:var(--heading); font-size:1.6rem; font-weight:800; color:var(--text); letter-spacing:-0.03em; margin-bottom:28px;">Core Values</h3>
+        <div class="values-grid" style="display:grid; grid-template-columns:repeat(3,1fr); gap:14px;">
+
+          <div style="background:var(--surface-hover); border:1px solid var(--border); border-radius:14px; padding:18px 20px;">
+            <div style="font-family:var(--heading); font-weight:700; color:var(--text); font-size:0.95rem; margin-bottom:6px;">Integrity</div>
+            <div style="font-size:0.85rem;">Honest in code, in communication, and in commitment to my team.</div>
+          </div>
+
+          <div style="background:var(--surface-hover); border:1px solid var(--border); border-radius:14px; padding:18px 20px;">
+            <div style="font-family:var(--heading); font-weight:700; color:var(--text); font-size:0.95rem; margin-bottom:6px;">Curiosity</div>
+            <div style="font-size:0.85rem;">Always learning — new languages, tools, frameworks, and ideas.</div>
+          </div>
+
+          <div style="background:var(--surface-hover); border:1px solid var(--border); border-radius:14px; padding:18px 20px;">
+            <div style="font-family:var(--heading); font-weight:700; color:var(--text); font-size:0.95rem; margin-bottom:6px;">Impact</div>
+            <div style="font-size:0.85rem;">Build things that matter to real lives, not just to pass a review.</div>
+          </div>
+
+          <div style="background:var(--surface-hover); border:1px solid var(--border); border-radius:14px; padding:18px 20px;">
+            <div style="font-family:var(--heading); font-weight:700; color:var(--text); font-size:0.95rem; margin-bottom:6px;">Resilience</div>
+            <div style="font-size:0.85rem;">Keep going when things get hard. Failure is just the next iteration.</div>
+          </div>
+
+          <div style="background:var(--surface-hover); border:1px solid var(--border); border-radius:14px; padding:18px 20px;">
+            <div style="font-family:var(--heading); font-weight:700; color:var(--text); font-size:0.95rem; margin-bottom:6px;">Collaboration</div>
+            <div style="font-size:0.85rem;">Great systems are built together. I listen, share, and lift others.</div>
+          </div>
+
+          <div style="background:var(--surface-hover); border:1px solid var(--border); border-radius:14px; padding:18px 20px;">
+            <div style="font-family:var(--heading); font-weight:700; color:var(--text); font-size:0.95rem; margin-bottom:6px;">Excellence</div>
+            <div style="font-size:0.85rem;">High-quality isn't optional. Every detail of a system deserves care.</div>
+          </div>
+
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -894,12 +1189,28 @@
         <a href="https://github.com/Gali-Abdias" target="_blank" class="btn-outline" style="flex-shrink:0">GitHub Profile ↗</a>
       </div>
 
-      <div class="projects-grid">
+      <!-- Filter Tabs -->
+      <div class="filter-bar">
+        <button class="filter-btn active" data-filter="all" onclick="filterProjects(this)">
+          All Projects <span class="filter-count">6</span>
+        </button>
+        <button class="filter-btn" data-filter="completed" onclick="filterProjects(this)">
+          ✅ Completed <span class="filter-count">3</span>
+        </button>
+        <button class="filter-btn" data-filter="in-progress" onclick="filterProjects(this)">
+          🔨 In Progress <span class="filter-count">3</span>
+        </button>
+      </div>
 
-        <div class="glass project-card">
+      <div class="projects-grid" id="projects-grid">
+
+        <div class="glass project-card" data-status="in-progress">
           <div class="project-top">
             <div class="project-icon" style="background:rgba(16,185,129,.12); border:1px solid rgba(16,185,129,.25)">🌿</div>
-            <svg class="project-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+            <div style="display:flex; align-items:center; gap:10px;">
+              <span class="status-badge in-progress"><span class="badge-icon">🔨</span> In Progress</span>
+              <svg class="project-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+            </div>
           </div>
           <div class="project-name">Cooling System — New Green Energy Chad</div>
           <p class="project-desc">Final year project — an innovative JavaScript-powered control system to monitor and regulate eco-friendly cooling infrastructure for green energy initiatives across Chad.</p>
@@ -909,10 +1220,13 @@
           </div>
         </div>
 
-        <div class="glass project-card">
+        <div class="glass project-card" data-status="completed">
           <div class="project-top">
             <div class="project-icon" style="background:rgba(239,68,68,.12); border:1px solid rgba(239,68,68,.25)">💊</div>
-            <svg class="project-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+            <div style="display:flex; align-items:center; gap:10px;">
+              <span class="status-badge completed"><span class="badge-icon">✅</span> Completed</span>
+              <svg class="project-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+            </div>
           </div>
           <div class="project-name">Pharmacy Management System</div>
           <p class="project-desc">A comprehensive Java application that streamlines healthcare workflows, manages inventory, tracks medication stock levels, and handles high-intensity pharmacological transactions.</p>
@@ -922,10 +1236,13 @@
           </div>
         </div>
 
-        <div class="glass project-card">
+        <div class="glass project-card" data-status="completed">
           <div class="project-top">
             <div class="project-icon" style="background:rgba(168,85,247,.12); border:1px solid rgba(168,85,247,.25)">🤝</div>
-            <svg class="project-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+            <div style="display:flex; align-items:center; gap:10px;">
+              <span class="status-badge completed"><span class="badge-icon">✅</span> Completed</span>
+              <svg class="project-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+            </div>
           </div>
           <div class="project-name">Volunteer Coordination System</div>
           <p class="project-desc">Full-stack distributed application built in Java using RMI. Automates scheduling of volunteer resources, tracks participation, and coordinates logistics for community events at scale.</p>
@@ -936,10 +1253,13 @@
           </div>
         </div>
 
-        <div class="glass project-card">
+        <div class="glass project-card" data-status="in-progress">
           <div class="project-top">
             <div class="project-icon" style="background:rgba(234,179,8,.12); border:1px solid rgba(234,179,8,.25)">📊</div>
-            <svg class="project-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+            <div style="display:flex; align-items:center; gap:10px;">
+              <span class="status-badge in-progress"><span class="badge-icon">🔨</span> In Progress</span>
+              <svg class="project-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+            </div>
           </div>
           <div class="project-name">Student Grade Management</div>
           <p class="project-desc">A responsive web platform for managing student records, calculating grade metrics, tracking enrollments, and evaluating academic performance across multiple courses and semesters.</p>
@@ -949,10 +1269,13 @@
           </div>
         </div>
 
-        <div class="glass project-card" style="grid-column: span 1;">
+        <div class="glass project-card" data-status="completed" style="grid-column: span 1;">
           <div class="project-top">
             <div class="project-icon" style="background:rgba(6,182,212,.12); border:1px solid rgba(6,182,212,.25)">🚌</div>
-            <svg class="project-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+            <div style="display:flex; align-items:center; gap:10px;">
+              <span class="status-badge completed"><span class="badge-icon">✅</span> Completed</span>
+              <svg class="project-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+            </div>
           </div>
           <div class="project-name">Bus Management System</div>
           <p class="project-desc">A robust digital platform for public transportation management. Features scheduling of bus routes, dynamic passenger ticketing, seat management, and real-time transit operations oversight.</p>
@@ -960,6 +1283,23 @@
             <span class="tech-badge badge-html">HTML</span>
             <span class="tech-badge badge-js">JavaScript</span>
             <span class="tech-badge badge-sql">SQL</span>
+          </div>
+        </div>
+
+        <div class="glass project-card" data-status="in-progress">
+          <div class="project-top">
+            <div class="project-icon" style="background:rgba(52,211,153,.12); border:1px solid rgba(52,211,153,.25)">🎮</div>
+            <div style="display:flex; align-items:center; gap:10px;">
+              <span class="status-badge in-progress"><span class="badge-icon">🔨</span> In Progress</span>
+              <svg class="project-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+            </div>
+          </div>
+          <div class="project-name">UbuzimaFun — Health Education Game</div>
+          <p class="project-desc">A collaborative mobile game designed to educate players about health and wellness through interactive gameplay. Built as a team project using Android and Kotlin, it gamifies health literacy to make learning about nutrition, hygiene, and disease prevention engaging and fun.</p>
+          <div class="project-tech">
+            <span class="tech-badge badge-android">Android</span>
+            <span class="tech-badge badge-kotlin">Kotlin</span>
+            <span class="tech-badge badge-java">Java</span>
           </div>
         </div>
 
@@ -1044,6 +1384,52 @@
       </div>
     </div>
   </footer>
+
+  <script>
+    // === Theme Toggle ===
+    function toggleTheme() {
+      const html = document.documentElement;
+      const current = html.getAttribute('data-theme');
+      const next = current === 'light' ? 'dark' : 'light';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('portfolio-theme', next);
+    }
+
+    // Restore saved theme (or respect system preference)
+    (function() {
+      const saved = localStorage.getItem('portfolio-theme');
+      if (saved) {
+        document.documentElement.setAttribute('data-theme', saved);
+      } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+
+    // === Project Filter ===
+    function filterProjects(btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const filter = btn.dataset.filter;
+      const cards = document.querySelectorAll('#projects-grid .project-card');
+
+      cards.forEach(card => {
+        if (filter === 'all' || card.dataset.status === filter) {
+          card.classList.remove('hidden');
+          card.style.opacity = '0';
+          card.style.transform = 'translateY(10px)';
+          requestAnimationFrame(() => {
+            setTimeout(() => {
+              card.style.opacity = '1';
+              card.style.transform = 'translateY(0)';
+            }, 10);
+          });
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    }
+  </script>
 
 </body>
 </html>
