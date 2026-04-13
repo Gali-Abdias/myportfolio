@@ -9,11 +9,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0a0a0a;
-      --card-bg: #111111;
-      --card-border: #262626;
-      --text-main: #f5f5f5;
-      --text-muted: #a3a3a3;
+      --bg: #030014;
+      --card-bg: rgba(17, 17, 25, 0.35);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --text-main: #ffffff;
+      --text-muted: #a3a3bd;
       --sans: 'Inter', sans-serif;
       --serif: 'Playfair Display', serif;
       --script: 'Caveat', cursive;
@@ -357,6 +357,78 @@
       font-weight: 600;
     }
 
+    /* --- Glassmorphic Blur --- */
+    .card, nav, .bento-card, .projects-container, .status-pill, .theme-toggle {
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+    }
+    
+    /* --- Cyberpunk Animated Background --- */
+    .bg-glow-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      overflow: hidden;
+      background: #030014;
+      pointer-events: none;
+    }
+
+    .bg-glow {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: 0.5;
+      animation: float-glow 20s infinite ease-in-out;
+    }
+
+    .bg-glow.purple { top: -10%; left: 20%; width: 50vw; height: 50vw; background: rgba(120, 20, 255, 0.4); animation-delay: 0s; }
+    .bg-glow.pink { bottom: -10%; right: 10%; width: 40vw; height: 40vw; background: rgba(255, 20, 147, 0.35); animation-delay: -5s; }
+    .bg-glow.blue { top: 40%; left: -10%; width: 45vw; height: 45vw; background: rgba(0, 150, 255, 0.3); animation-delay: -10s; }
+
+    @keyframes float-glow {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(5%, 5%) scale(1.1); }
+      66% { transform: translate(-5%, 8%) scale(0.9); }
+    }
+
+    .bg-ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid;
+      box-shadow: 0 0 15px currentColor, inset 0 0 15px currentColor;
+      opacity: 0.3;
+      transform-origin: center;
+    }
+
+    .bg-ring.r1 { top: 15%; right: 25%; width: 25vw; height: 25vw; color: #00ffff; }
+    .bg-ring.r2 { bottom: 20%; left: 35%; width: 12vw; height: 12vw; color: #ff00ff; }
+    .bg-ring.r3 { top: 60%; right: 5%; width: 18vw; height: 18vw; color: #00ffff; }
+
+    .bg-line {
+      position: absolute;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, currentColor, transparent);
+      opacity: 0.5;
+      box-shadow: 0 0 10px currentColor;
+      animation: drift-line 10s linear infinite;
+    }
+
+    .bg-line.l1 { top: 20%; left: 40%; width: 200px; color: #ff00ff; }
+    .bg-line.l2 { top: 35%; right: 30%; width: 150px; color: #00ffff; animation-duration: 15s; animation-delay: -5s; }
+    .bg-line.l3 { bottom: 30%; right: 40%; width: 250px; color: #ff00ff; animation-duration: 20s; animation-delay: -10s; }
+    .bg-line.l4 { bottom: 45%; left: 20%; width: 180px; color: #00ffff; animation-duration: 12s; }
+
+    @keyframes drift-line {
+      0% { transform: translateX(-50px) scaleX(0.8); opacity: 0; }
+      20% { opacity: 0.8; }
+      80% { opacity: 0.8; }
+      100% { transform: translateX(50px) scaleX(1.1); opacity: 0; }
+    }
+
     /* Responsive */
     @media (max-width: 800px) {
       .bento-grid { grid-template-columns: 1fr; }
@@ -370,6 +442,46 @@
   </style>
 </head>
 <body>
+
+  <!-- Cyberpunk Background -->
+  <div class="bg-glow-container">
+    <div class="bg-glow purple"></div>
+    <div class="bg-glow pink"></div>
+    <div class="bg-glow blue"></div>
+    <div class="bg-ring r1"></div>
+    <div class="bg-ring r2"></div>
+    <div class="bg-ring r3"></div>
+    <div class="bg-line l1"></div>
+    <div class="bg-line l2"></div>
+    <div class="bg-line l3"></div>
+    <div class="bg-line l4"></div>
+    <svg style="position:absolute; width:100%; height:100%; opacity:0.6; top:0; left:0" viewBox="0 0 100 100" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="grad-wave" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#ff00ff" stop-opacity="0" />
+          <stop offset="30%" stop-color="#00ffff" stop-opacity="0.8" />
+          <stop offset="70%" stop-color="#ff00ff" stop-opacity="0.8" />
+          <stop offset="100%" stop-color="#00ffff" stop-opacity="0" />
+        </linearGradient>
+      </defs>
+      <path d="M0,40 Q25,20 50,50 T100,60" fill="none" stroke="url(#grad-wave)" stroke-width="0.3"/>
+      <path d="M0,42 Q25,22 50,52 T100,62" fill="none" stroke="url(#grad-wave)" stroke-width="0.3"/>
+      <path d="M0,44 Q25,24 50,54 T100,64" fill="none" stroke="url(#grad-wave)" stroke-width="0.3"/>
+      <path d="M0,46 Q25,26 50,56 T100,66" fill="none" stroke="url(#grad-wave)" stroke-width="0.3"/>
+      <path d="M0,48 Q25,28 50,58 T100,68" fill="none" stroke="url(#grad-wave)" stroke-width="0.3"/>
+      <path d="M0,50 Q25,30 50,60 T100,70" fill="none" stroke="url(#grad-wave)" stroke-width="0.3"/>
+      <path d="M0,52 Q25,32 50,62 T100,72" fill="none" stroke="url(#grad-wave)" stroke-width="0.3"/>
+      <path d="M0,54 Q25,34 50,64 T100,74" fill="none" stroke="url(#grad-wave)" stroke-width="0.3"/>
+      <path d="M0,56 Q25,36 50,66 T100,76" fill="none" stroke="url(#grad-wave)" stroke-width="0.3"/>
+      <path d="M0,58 Q25,38 50,68 T100,78" fill="none" stroke="url(#grad-wave)" stroke-width="0.3"/>
+      <path d="M0,60 Q25,80 50,50 T100,40" fill="none" stroke="url(#grad-wave)" stroke-width="0.3"/>
+      <path d="M0,62 Q25,82 50,52 T100,42" fill="none" stroke="url(#grad-wave)" stroke-width="0.3"/>
+      <path d="M0,64 Q25,84 50,54 T100,44" fill="none" stroke="url(#grad-wave)" stroke-width="0.3"/>
+      <path d="M0,66 Q25,86 50,56 T100,46" fill="none" stroke="url(#grad-wave)" stroke-width="0.3"/>
+      <path d="M0,68 Q25,88 50,58 T100,48" fill="none" stroke="url(#grad-wave)" stroke-width="0.3"/>
+      <path d="M0,70 Q25,90 50,60 T100,50" fill="none" stroke="url(#grad-wave)" stroke-width="0.3"/>
+    </svg>
+  </div>
 
   <div class="container">
     
