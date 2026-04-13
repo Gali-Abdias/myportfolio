@@ -3,669 +3,1047 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gali Abdias Ndaga | Builder</title>
+  <title>Gali Abdias Ndaga | Software Engineer</title>
+  <meta name="description" content="Portfolio of Gali Abdias Ndaga — Software Engineering student proficient in Java, React, SQL, and modern web technologies." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <style>
+    /* ===========================
+       DESIGN TOKENS
+    =========================== */
     :root {
-      --bg: #030014;
-      --card-bg: rgba(17, 17, 25, 0.35);
-      --card-border: rgba(255, 255, 255, 0.08);
-      --text-main: #ffffff;
-      --text-muted: #a3a3bd;
-      --sans: 'Inter', sans-serif;
+      --bg: #03000f;
+      --surface: rgba(255, 255, 255, 0.04);
+      --surface-hover: rgba(255, 255, 255, 0.07);
+      --border: rgba(255, 255, 255, 0.09);
+      --border-glow: rgba(139, 92, 246, 0.4);
+      --text: #f1f0ff;
+      --text-muted: #9490b5;
+      --text-faint: #4f4c6e;
+      --accent: #a855f7;
+      --accent-2: #06b6d4;
+      --accent-3: #ec4899;
       --heading: 'Outfit', sans-serif;
+      --body: 'Inter', sans-serif;
       --mono: 'Space Mono', monospace;
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
+    /* ===========================
+       RESET & BASE
+    =========================== */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-
     body {
-      background-color: var(--bg);
+      background: var(--bg);
       color: var(--text-muted);
-      font-family: var(--sans);
-      line-height: 1.7;
-      font-size: 1.05rem;
-      padding-bottom: 100px;
+      font-family: var(--body);
+      font-size: 1rem;
+      line-height: 1.75;
       -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
     }
-
-    h1, h2, h3, .serif-txt {
-      font-family: var(--heading);
-      color: var(--text-main);
-      font-weight: 800;
-      letter-spacing: -0.02em;
-    }
-
     a { text-decoration: none; color: inherit; }
+    strong { color: var(--text); font-weight: 600; }
+    h1, h2, h3, h4 { font-family: var(--heading); color: var(--text); font-weight: 800; letter-spacing: -0.03em; }
 
-    .container {
-      max-width: 100%;
-      margin: 0 auto;
-      padding: 0 5%;
+    /* ===========================
+       ANIMATED BACKGROUND
+    =========================== */
+    .bg-canvas {
+      position: fixed; inset: 0; z-index: -1;
+      background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(139,92,246,.25), transparent),
+                  radial-gradient(ellipse 60% 60% at 80% 80%, rgba(236,72,153,.15), transparent),
+                  radial-gradient(ellipse 70% 50% at 10% 80%, rgba(6,182,212,.12), transparent),
+                  #03000f;
+    }
+    .bg-canvas::after {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        radial-gradient(circle at 25% 40%, rgba(139,92,246,.08) 0%, transparent 55%),
+        radial-gradient(circle at 75% 60%, rgba(236,72,153,.07) 0%, transparent 55%);
+      animation: pulseGlow 8s ease-in-out infinite alternate;
+    }
+    @keyframes pulseGlow {
+      from { opacity: 0.6; } to { opacity: 1; }
     }
 
-    /* --- Navbar --- */
-    header {
+    /* ===========================
+       LAYOUT
+    =========================== */
+    .wrapper {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ===========================
+       NAVBAR
+    =========================== */
+    .navbar {
+      position: sticky; top: 0; z-index: 100;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      background: rgba(3, 0, 15, 0.7);
+      border-bottom: 1px solid var(--border);
+    }
+    .navbar-inner {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 30px 0;
-      margin-bottom: 20px;
+      height: 64px;
     }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
     }
-
-    .logo-img {
-      width: 40px;
-      height: 40px;
+    .nav-logo img {
+      width: 36px; height: 36px;
       border-radius: 50%;
       object-fit: cover;
-      filter: grayscale(50%) contrast(1.1);
+      border: 2px solid var(--border-glow);
+      filter: contrast(1.1);
     }
-
-    .logo-text {
+    .nav-logo-name {
       font-family: var(--heading);
-      font-size: 1.8rem;
       font-weight: 800;
-      color: var(--text-main);
-      letter-spacing: -1px;
+      font-size: 1.2rem;
+      color: var(--text);
+      letter-spacing: -0.5px;
     }
-
-    .logo-script {
+    .nav-logo-tag {
       font-family: var(--mono);
-      font-size: 0.8rem;
-      color: #00ffff;
-      text-transform: uppercase;
+      font-size: 0.65rem;
+      color: var(--accent-2);
       letter-spacing: 2px;
-      margin-top: 4px;
-      opacity: 0.8;
+      text-transform: uppercase;
+      display: block;
+      line-height: 1;
     }
-
-    nav {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 30px;
-      padding: 6px 8px;
-    }
-
     nav ul {
-      display: flex;
-      list-style: none;
-      gap: 5px;
+      display: flex; list-style: none; gap: 4px;
     }
-
     nav ul li a {
-      font-size: 0.9rem;
+      font-size: 0.875rem;
       font-weight: 500;
-      padding: 8px 16px;
-      border-radius: 20px;
-      transition: all 0.2s ease;
+      padding: 6px 14px;
+      border-radius: 8px;
+      color: var(--text-muted);
+      transition: all 0.2s;
     }
-
     nav ul li a:hover {
-      background: rgba(255, 255, 255, 0.05);
-      color: var(--text-main);
+      color: var(--text);
+      background: var(--surface-hover);
     }
+    .nav-contact-btn {
+      font-family: var(--body);
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 8px 20px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-3));
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.2s;
+      display: inline-block;
+    }
+    .nav-contact-btn:hover { opacity: 0.88; transform: translateY(-1px); }
 
-    .theme-toggle {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      border: 1px solid var(--card-border);
+    /* ===========================
+       SECTION UTILITY
+    =========================== */
+    section { padding: 96px 0; }
+    .section-kicker {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
       display: flex;
       align-items: center;
-      justify-content: center;
-      background: transparent;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .section-kicker::after {
+      content: '';
+      display: block;
+      height: 1px;
+      width: 40px;
+      background: var(--accent);
+      opacity: 0.5;
+    }
+    .section-title {
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      margin-bottom: 16px;
+    }
+    .section-subtitle {
+      max-width: 560px;
+      font-size: 1.05rem;
+      line-height: 1.8;
       color: var(--text-muted);
-      cursor: pointer;
+    }
+    .section-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 56px;
+      flex-wrap: wrap;
+      gap: 24px;
     }
 
-    /* --- Cards --- */
-    .card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 16px;
-      padding: 40px;
-      margin-bottom: 24px;
+    /* ===========================
+       GLASS CARD
+    =========================== */
+    .glass {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    }
+    .glass:hover {
+      border-color: var(--border-glow);
+      transform: translateY(-3px);
+      box-shadow: 0 16px 48px rgba(139, 92, 246, 0.12);
     }
 
-    /* --- Hero Card --- */
-    .hero-meta {
-      font-size: 0.75rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      font-weight: 600;
-      margin-bottom: 15px;
-      color: #666;
+    /* ===========================
+       HERO
+    =========================== */
+    .hero {
+      min-height: calc(100vh - 64px);
+      display: flex;
+      align-items: center;
+      padding: 80px 0;
     }
-
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 60px;
+      align-items: center;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(168, 85, 247, 0.1);
+      border: 1px solid rgba(168, 85, 247, 0.3);
+      border-radius: 100px;
+      padding: 6px 16px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #d8b4fe;
+      margin-bottom: 28px;
+    }
+    .hero-badge-dot {
+      width: 7px; height: 7px;
+      background: #10b981;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #10b981;
+      animation: blink 2s ease-in-out infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
     .hero-title {
-      font-size: clamp(3.5rem, 8vw, 5rem);
-      line-height: 1.1;
-      margin-bottom: 25px;
-      letter-spacing: -2px;
-      background: linear-gradient(to right, #ffffff, #a3a3bd);
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      line-height: 1.05;
+      letter-spacing: -3px;
+      margin-bottom: 24px;
+      background: linear-gradient(135deg, #ffffff 0%, #c4b5fd 50%, #a855f7 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      text-shadow: 0px 4px 40px rgba(255, 255, 255, 0.15);
+      background-clip: text;
     }
-
     .hero-desc {
-      font-size: 1.2rem;
-      line-height: 1.8;
-      max-width: 650px;
-      color: rgba(255, 255, 255, 0.85);
+      font-size: 1.15rem;
+      line-height: 1.85;
+      color: rgba(241, 240, 255, 0.75);
+      max-width: 560px;
+      margin-bottom: 40px;
     }
-
-    /* --- Bio Card --- */
-    .bio-grid {
-      display: flex;
-      gap: 40px;
-      align-items: flex-start;
+    .hero-btns {
+      display: flex; gap: 14px; flex-wrap: wrap;
     }
+    .btn-primary {
+      padding: 13px 28px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #a855f7, #ec4899);
+      color: white;
+      font-weight: 600;
+      font-size: 0.95rem;
+      border: none;
+      cursor: pointer;
+      display: inline-block;
+      transition: opacity 0.2s, transform 0.2s;
+      box-shadow: 0 8px 24px rgba(168,85,247,0.35);
+    }
+    .btn-primary:hover { opacity: 0.9; transform: translateY(-2px); }
+    .btn-outline {
+      padding: 13px 28px;
+      border-radius: 12px;
+      background: transparent;
+      color: var(--text);
+      font-weight: 600;
+      font-size: 0.95rem;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      display: inline-block;
+      transition: all 0.2s;
+    }
+    .btn-outline:hover { background: var(--surface-hover); border-color: var(--border-glow); }
 
-    .bio-img {
-      width: 200px;
-      height: 250px;
-      border-radius: 16px;
+    /* Hero Photo Card */
+    .hero-photo-card {
+      padding: 20px;
+      position: relative;
+    }
+    .hero-photo-card::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: 21px;
+      background: linear-gradient(135deg, rgba(168,85,247,0.5), rgba(236,72,153,0.3), transparent 60%);
+      z-index: -1;
+    }
+    .hero-photo {
+      width: 100%;
+      aspect-ratio: 3/4;
+      border-radius: 14px;
       object-fit: cover;
-      flex-shrink: 0;
-      filter: grayscale(30%) contrast(1.1);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      display: block;
+      filter: contrast(1.05) saturate(0.9);
+    }
+    .hero-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .stat-chip {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      text-align: center;
+    }
+    .stat-chip .num {
+      font-family: var(--heading);
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--text);
+      display: block;
+    }
+    .stat-chip .lbl {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-faint);
     }
 
-    .bio-content { flex: 1; }
-
-    .bio-script {
+    /* ===========================
+       ABOUT / BIO STRIP
+    =========================== */
+    .about-strip {
+      padding: 56px;
+    }
+    .about-mono-tag {
       font-family: var(--mono);
-      font-size: 1rem;
-      color: #ff00ff;
+      font-size: 0.75rem;
+      color: var(--accent-3);
       text-transform: uppercase;
       letter-spacing: 2px;
-      margin-bottom: 20px;
-      opacity: 0.9;
+      margin-bottom: 12px;
     }
+    .about-text { font-size: 1rem; line-height: 1.85; }
+    .about-text + .about-text { margin-top: 14px; }
+    .about-strip .btn-primary { margin-top: 30px; }
 
-    .bio-text { margin-bottom: 15px; font-size: 0.95rem; }
-
-    .btn-group {
-      display: flex;
-      gap: 15px;
-      margin-top: 30px;
-    }
-
-    .btn {
-      padding: 10px 24px;
-      border-radius: 8px;
-      font-size: 0.9rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .btn-primary {
-      background: var(--text-main);
-      color: var(--bg);
-      border: 1px solid var(--text-main);
-    }
-
-    .btn-primary:hover { opacity: 0.9; }
-
-    .btn-secondary {
-      background: transparent;
-      color: var(--text-main);
-      border: 1px solid var(--card-border);
-    }
-
-    .btn-secondary:hover { background: rgba(255,255,255,0.05); }
-
-    /* --- Bento Grid --- */
-    .bento-grid {
+    /* ===========================
+       SKILLS SECTION
+    =========================== */
+    .skills-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 24px;
-      margin-bottom: 24px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
     }
-
-    .bento-card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 16px;
-      padding: 30px;
+    .skill-card {
+      padding: 28px;
     }
-
-    .bento-header {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 20px;
-      font-size: 1.5rem;
+    .skill-icon {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, rgba(168,85,247,0.2), rgba(236,72,153,0.15));
+      border: 1px solid rgba(168,85,247,0.25);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 16px;
     }
-
-    .bento-icon {
-      width: 24px;
-      height: 24px;
-      opacity: 0.8;
+    .skill-icon svg {
+      width: 20px; height: 20px;
+      stroke: #c4b5fd;
       fill: none;
-      stroke: var(--text-main);
       stroke-width: 2;
       stroke-linecap: round;
       stroke-linejoin: round;
     }
+    .skill-name {
+      font-family: var(--heading);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .skill-tags {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      margin-top: 14px;
+    }
+    .skill-tag {
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 100px;
+      background: rgba(168,85,247,0.12);
+      border: 1px solid rgba(168,85,247,0.25);
+      color: #c4b5fd;
+      letter-spacing: 0.5px;
+    }
 
-    .bento-list { list-style: none; font-size: 0.9rem; }
-    .bento-list li { margin-bottom: 12px; }
+    /* ===========================
+       TIMELINE (Education)
+    =========================== */
+    .timeline {
+      position: relative;
+      padding-left: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 8px; top: 6px; bottom: 6px;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--accent), var(--accent-3), transparent);
+      border-radius: 2px;
+    }
+    .timeline-item {
+      position: relative;
+      padding-bottom: 36px;
+    }
+    .timeline-item:last-child { padding-bottom: 0; }
+    .timeline-dot {
+      position: absolute;
+      left: -28px; top: 6px;
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 2px solid var(--bg);
+      box-shadow: 0 0 10px rgba(168,85,247,0.7);
+    }
+    .timeline-year {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 1.5px;
+      margin-bottom: 4px;
+    }
+    .timeline-role {
+      font-family: var(--heading);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+    .timeline-org {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
 
-    /* Tags Pill Box */
-    .tags-grid {
+    /* ===========================
+       PROJECTS SECTION
+    =========================== */
+    .projects-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
+      gap: 22px;
     }
-
-    .tag {
-      border: 1px solid #333;
-      padding: 8px 16px;
-      border-radius: 8px;
-      font-size: 0.85rem;
+    .project-card {
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .project-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .project-icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+    .project-arrow {
+      color: var(--text-faint);
+      transition: color 0.2s, transform 0.2s;
+    }
+    .project-card:hover .project-arrow {
+      color: var(--accent);
+      transform: translate(3px, -3px);
+    }
+    .project-name {
+      font-family: var(--heading);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .project-desc {
+      font-size: 0.9rem;
+      line-height: 1.75;
       color: var(--text-muted);
-      text-align: left;
+      flex: 1;
+    }
+    .project-tech {
+      display: flex; flex-wrap: wrap; gap: 6px;
+    }
+    .tech-badge {
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 100px;
+      letter-spacing: 0.5px;
+    }
+    .badge-java { background: rgba(249,115,22,.12); border: 1px solid rgba(249,115,22,.3); color: #fdba74; }
+    .badge-js   { background: rgba(234,179,8,.12);  border: 1px solid rgba(234,179,8,.3);  color: #fde68a; }
+    .badge-html { background: rgba(239,68,68,.12);  border: 1px solid rgba(239,68,68,.3);  color: #fca5a5; }
+    .badge-sql  { background: rgba(6,182,212,.12);  border: 1px solid rgba(6,182,212,.3);  color: #67e8f9; }
+    .badge-rmi  { background: rgba(168,85,247,.12); border: 1px solid rgba(168,85,247,.3); color: #c4b5fd; }
+
+    /* ===========================
+       CERTIFICATIONS & PROFILE (2-col)
+    =========================== */
+    .info-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+    }
+    .info-card { padding: 32px; }
+    .info-card-title {
+      font-family: var(--heading);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .info-card-title svg {
+      width: 18px; height: 18px;
+      stroke: var(--accent);
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .cert-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .cert-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+    .cert-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+      margin-top: 7px;
+    }
+    .profile-rows { display: flex; flex-direction: column; gap: 14px; }
+    .profile-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.875rem;
+    }
+    .profile-label {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-faint);
+      min-width: 80px;
+    }
+    .lang-bar {
+      flex: 1;
+      height: 4px;
+      background: var(--surface-hover);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .lang-fill {
+      height: 100%;
+      border-radius: 4px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
     }
 
-    /* --- Footer Status --- */
+    /* ===========================
+       FOOTER
+    =========================== */
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 48px 0;
+    }
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .footer-quote {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--accent-2);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 4px;
+    }
+    .footer-copy { font-size: 0.8rem; color: var(--text-faint); }
+    .footer-links { display: flex; align-items: center; gap: 20px; }
+    .footer-link {
+      color: var(--text-muted);
+      transition: color 0.2s;
+      display: flex;
+    }
+    .footer-link:hover { color: var(--text); }
+    .footer-link svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .footer-cta {
+      padding: 10px 24px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-3));
+      color: white;
+      font-weight: 600;
+      font-size: 0.875rem;
+      display: inline-block;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .footer-cta:hover { opacity: 0.88; transform: translateY(-1px); }
+
+    /* ===========================
+       STATUS PILL
+    =========================== */
+    .status-row { text-align: center; padding: 24px 0; }
     .status-pill {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      border: 1px solid var(--card-border);
-      border-radius: 20px;
-      padding: 6px 16px;
+      background: rgba(16,185,129,.08);
+      border: 1px solid rgba(16,185,129,.25);
+      border-radius: 100px;
+      padding: 7px 18px;
       font-size: 0.8rem;
-      margin: 40px auto;
-      background: var(--card-bg);
+      font-weight: 500;
+      color: #6ee7b7;
     }
-
     .status-dot {
-      width: 8px;
-      height: 8px;
+      width: 7px; height: 7px;
       background: #10b981;
       border-radius: 50%;
-      box-shadow: 0 0 10px #10b981;
+      box-shadow: 0 0 8px #10b981;
+      animation: blink 2s ease-in-out infinite;
     }
 
-    .section-headline {
-      text-align: center;
-      font-size: 2rem;
-      margin-bottom: 30px;
+    /* ===========================
+       RESPONSIVE
+    =========================== */
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero-photo-card { max-width: 300px; }
+      .skills-grid { grid-template-columns: 1fr 1fr; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .info-columns { grid-template-columns: 1fr; }
     }
-
-    /* --- Projects (Substituting Github Graph) --- */
-    .projects-container {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 16px;
-      padding: 40px;
-      text-align: center;
-    }
-    
-    .project-item {
-      text-align: left;
-      border-bottom: 1px solid var(--card-border);
-      padding: 20px 0;
-    }
-    
-    .project-item:last-child {
-      border-bottom: none;
-      padding-bottom: 0;
-    }
-
-    .project-item h3 {
-      font-family: var(--sans);
-      font-size: 1.1rem;
-      color: var(--text-main);
-      margin-bottom: 6px;
-    }
-
-    .project-item p {
-      font-size: 0.9rem;
-    }
-
-    /* --- Footer --- */
-    footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 60px;
-      padding-top: 20px;
-      border-top: 1px solid #1a1a1a;
-      font-size: 0.85rem;
-    }
-
-    .footer-left .script-quote {
-      font-family: var(--mono);
-      font-size: 0.9rem;
-      color: #00ffff;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      margin-bottom: 8px;
-    }
-
-    .footer-right {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-
-    .contact-pill {
-      background: var(--text-main);
-      color: var(--bg);
-      padding: 8px 20px;
-      border-radius: 20px;
-      font-weight: 600;
-    }
-
-    /* --- Glassmorphic Blur --- */
-    .card, nav, .bento-card, .projects-container, .status-pill, .theme-toggle {
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-    }
-    
-    /* --- Cyberpunk Animated Background --- */
-    .bg-glow-container {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: -1;
-      overflow: hidden;
-      background: #030014;
-      pointer-events: none;
-    }
-
-    .bg-glow {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(90px);
-      opacity: 0.5;
-      animation: float-glow 20s infinite ease-in-out;
-    }
-
-    .bg-glow.purple { top: -10%; left: 20%; width: 50vw; height: 50vw; background: rgba(120, 20, 255, 0.4); animation-delay: 0s; }
-    .bg-glow.pink { bottom: -10%; right: 10%; width: 40vw; height: 40vw; background: rgba(255, 20, 147, 0.35); animation-delay: -5s; }
-    .bg-glow.blue { top: 40%; left: -10%; width: 45vw; height: 45vw; background: rgba(0, 150, 255, 0.3); animation-delay: -10s; }
-
-    @keyframes float-glow {
-      0%, 100% { transform: translate(0, 0) scale(1); }
-      33% { transform: translate(5%, 5%) scale(1.1); }
-      66% { transform: translate(-5%, 8%) scale(0.9); }
-    }
-
-    .bg-ring {
-      position: absolute;
-      border-radius: 50%;
-      border: 1px solid;
-      box-shadow: 0 0 15px currentColor, inset 0 0 15px currentColor;
-      opacity: 0.3;
-      transform-origin: center;
-    }
-
-    .bg-ring.r1 { top: 15%; right: 25%; width: 25vw; height: 25vw; color: #00ffff; }
-    .bg-ring.r2 { bottom: 20%; left: 35%; width: 12vw; height: 12vw; color: #ff00ff; }
-    .bg-ring.r3 { top: 60%; right: 5%; width: 18vw; height: 18vw; color: #00ffff; }
-
-    .bg-line {
-      position: absolute;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, currentColor, transparent);
-      opacity: 0.5;
-      box-shadow: 0 0 10px currentColor;
-      animation: drift-line 10s linear infinite;
-    }
-
-    .bg-line.l1 { top: 20%; left: 40%; width: 200px; color: #ff00ff; }
-    .bg-line.l2 { top: 35%; right: 30%; width: 150px; color: #00ffff; animation-duration: 15s; animation-delay: -5s; }
-    .bg-line.l3 { bottom: 30%; right: 40%; width: 250px; color: #ff00ff; animation-duration: 20s; animation-delay: -10s; }
-    .bg-line.l4 { bottom: 45%; left: 20%; width: 180px; color: #00ffff; animation-duration: 12s; }
-
-    @keyframes drift-line {
-      0% { transform: translateX(-50px) scaleX(0.8); opacity: 0; }
-      20% { opacity: 0.8; }
-      80% { opacity: 0.8; }
-      100% { transform: translateX(50px) scaleX(1.1); opacity: 0; }
-    }
-
-    /* Responsive */
-    @media (max-width: 800px) {
-      .bento-grid { grid-template-columns: 1fr; }
-      .bio-grid { flex-direction: column; }
-      .bio-img { width: 100%; height: auto; max-height: 400px; }
-      nav { display: none; }
-      header { flex-direction: column; gap: 15px; align-items: flex-start; }
-      .hero-title { font-size: 2.5rem; }
-      footer { flex-direction: column; gap: 20px; align-items: flex-start; }
+    @media (max-width: 640px) {
+      section { padding: 64px 0; }
+      .skills-grid { grid-template-columns: 1fr; }
+      nav ul { display: none; }
+      .about-strip { padding: 32px; }
+      .section-header-row { flex-direction: column; align-items: flex-start; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Cyberpunk Background -->
-  <div class="bg-glow-container">
-    <div class="bg-glow purple"></div>
-    <div class="bg-glow pink"></div>
-    <div class="bg-glow blue"></div>
-    <div class="bg-ring r1"></div>
-    <div class="bg-ring r2"></div>
-    <div class="bg-ring r3"></div>
-    <div class="bg-line l1"></div>
-    <div class="bg-line l2"></div>
-    <div class="bg-line l3"></div>
-    <div class="bg-line l4"></div>
-    <svg style="position:absolute; width:100%; height:100%; opacity:0.6; top:0; left:0" viewBox="0 0 100 100" preserveAspectRatio="none">
-      <defs>
-        <linearGradient id="grad-wave" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stop-color="#ff00ff" stop-opacity="0" />
-          <stop offset="30%" stop-color="#00ffff" stop-opacity="0.8" />
-          <stop offset="70%" stop-color="#ff00ff" stop-opacity="0.8" />
-          <stop offset="100%" stop-color="#00ffff" stop-opacity="0" />
-        </linearGradient>
-      </defs>
-      <path d="M0,40 Q25,20 50,50 T100,60" fill="none" stroke="url(#grad-wave)" stroke-width="0.3"/>
-      <path d="M0,42 Q25,22 50,52 T100,62" fill="none" stroke="url(#grad-wave)" stroke-width="0.3"/>
-      <path d="M0,44 Q25,24 50,54 T100,64" fill="none" stroke="url(#grad-wave)" stroke-width="0.3"/>
-      <path d="M0,46 Q25,26 50,56 T100,66" fill="none" stroke="url(#grad-wave)" stroke-width="0.3"/>
-      <path d="M0,48 Q25,28 50,58 T100,68" fill="none" stroke="url(#grad-wave)" stroke-width="0.3"/>
-      <path d="M0,50 Q25,30 50,60 T100,70" fill="none" stroke="url(#grad-wave)" stroke-width="0.3"/>
-      <path d="M0,52 Q25,32 50,62 T100,72" fill="none" stroke="url(#grad-wave)" stroke-width="0.3"/>
-      <path d="M0,54 Q25,34 50,64 T100,74" fill="none" stroke="url(#grad-wave)" stroke-width="0.3"/>
-      <path d="M0,56 Q25,36 50,66 T100,76" fill="none" stroke="url(#grad-wave)" stroke-width="0.3"/>
-      <path d="M0,58 Q25,38 50,68 T100,78" fill="none" stroke="url(#grad-wave)" stroke-width="0.3"/>
-      <path d="M0,60 Q25,80 50,50 T100,40" fill="none" stroke="url(#grad-wave)" stroke-width="0.3"/>
-      <path d="M0,62 Q25,82 50,52 T100,42" fill="none" stroke="url(#grad-wave)" stroke-width="0.3"/>
-      <path d="M0,64 Q25,84 50,54 T100,44" fill="none" stroke="url(#grad-wave)" stroke-width="0.3"/>
-      <path d="M0,66 Q25,86 50,56 T100,46" fill="none" stroke="url(#grad-wave)" stroke-width="0.3"/>
-      <path d="M0,68 Q25,88 50,58 T100,48" fill="none" stroke="url(#grad-wave)" stroke-width="0.3"/>
-      <path d="M0,70 Q25,90 50,60 T100,50" fill="none" stroke="url(#grad-wave)" stroke-width="0.3"/>
-    </svg>
-  </div>
+  <!-- ===== ANIMATED BG ===== -->
+  <div class="bg-canvas"></div>
 
-  <div class="container">
-    
-    <!-- Navbar -->
-    <header>
-      <div class="logo">
-        <img src="homepage.jpg" alt="Logo Avatar" class="logo-img" />
+  <!-- ===== NAVBAR ===== -->
+  <div class="navbar">
+    <div class="wrapper navbar-inner">
+      <div class="nav-logo">
+        <img src="homepage.jpg" alt="Gali Abdias Ndaga" />
         <div>
-          <span class="logo-text">Gali</span>
-          <span class="logo-script">engineered solutions</span>
+          <span class="nav-logo-name">Gali Ndaga</span>
+          <span class="nav-logo-tag">Software Engineer</span>
         </div>
       </div>
       <nav>
         <ul>
+          <li><a href="#hero">Home</a></li>
           <li><a href="#about">About</a></li>
           <li><a href="#skills">Skills</a></li>
           <li><a href="#projects">Projects</a></li>
         </ul>
       </nav>
-      <button class="theme-toggle" aria-label="Toggle theme">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-      </button>
-    </header>
-
-    <!-- Card 1: Hero -->
-    <div id="about" class="card">
-      <div class="hero-meta">About the Builder</div>
-      <h1 class="hero-title">Gali Abdias Ndaga.</h1>
-      <p class="hero-desc">
-        Motivated Computer Science student with a solid foundation in Software Engineering. Experienced in building high-quality solutions using Java, SQL, and modern Web Technologies.
-      </p>
+      <a href="mailto:galiabdiasndaga@yahoo.com" class="nav-contact-btn">Hire Me →</a>
     </div>
-
-    <!-- Card 2: Bio Grid -->
-    <div class="card bio-grid">
-      <img src="homepage.jpg" alt="Gali Abdias Ndaga" class="bio-img" />
-      <div class="bio-content">
-        <div class="bio-script">software engineer, rapid learner, problem-solver.</div>
-        <p class="bio-text">
-          Motivated Computer Science student with a solid foundation in Software Engineering. Proficient in Java (Spring Boot), SQL (PostgreSQL), and web technologies including JavaScript, React JS, HTML, and CSS.
-        </p>
-        <p class="bio-text">
-          Experienced in using GitHub and GitLab for version control and collaboration in fast-paced team environments. Highly analytical, detail-oriented, and proactive in learning new tools and technologies to build high-quality software solutions.
-        </p>
-        <div class="btn-group">
-          <a href="#projects" class="btn btn-primary">View Projects</a>
-          <a href="#skills" class="btn btn-secondary">Explore Skills</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- Bento Grid Section -->
-    <div id="skills" class="bento-grid">
-      
-      <!-- Education / Experience -->
-      <div class="bento-card">
-        <h2 class="bento-header serif-txt">
-          <svg class="bento-icon" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
-          Education & Experience
-        </h2>
-        <ul class="bento-list">
-          <li><strong>2023-2026:</strong> Software Engineering at AUCA</li>
-          <li><strong>2025:</strong> Software Engineering Internship at TrialTech</li>
-          <li><strong>2021-2022:</strong> High School Diploma</li>
-          <li><strong>2020-2021:</strong> English Internship at U.S embassy Chad</li>
-          <li><strong>2018-2020:</strong> Intensive English Training Program (USA Sponsored)</li>
-        </ul>
-      </div>
-
-      <!-- Skills -->
-      <div class="bento-card">
-        <h2 class="bento-header serif-txt">
-          <svg class="bento-icon" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
-          Skills
-        </h2>
-        <div class="tags-grid">
-          <div class="tag">Java & Spring Boot</div>
-          <div class="tag">React Js & JavaScript</div>
-          <div class="tag">HTML/CSS</div>
-          <div class="tag">SQL</div>
-          <div class="tag">GitHub/GitLab</div>
-          <div class="tag">Leadership</div>
-        </div>
-      </div>
-
-      <!-- Certifications -->
-      <div class="bento-card">
-        <h2 class="bento-header serif-txt">
-          <svg class="bento-icon" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-          Certifications
-        </h2>
-        <ul class="bento-list" style="font-size: 0.85rem;">
-          <li>FreeCodeCamp: Web Design & JavaScript</li>
-          <li>Udemy: Java (Spring Boot)</li>
-          <li>Cisco: OS Basic & Networking Essential</li>
-          <li>Aspire Institute: Leadership Program</li>
-          <li>Intensive American English Certification</li>
-        </ul>
-      </div>
-
-      <!-- Profile & More -->
-      <div class="bento-card">
-        <h2 class="bento-header serif-txt">
-          <svg class="bento-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-          Profile & Hobbies
-        </h2>
-        <ul class="bento-list">
-          <li><strong>Languages:</strong> English (85%), French (85%), Arabic (50%)</li>
-          <li><strong>Hobbies:</strong> Coding, Listening to Music, Playing Basketball</li>
-          <li><strong>Nationality:</strong> Chadian (Born 03/12/2004)</li>
-        </ul>
-      </div>
-
-    </div>
-
-    <!-- Projects (Replacing GitHub Commit Section) -->
-    <div style="text-align: center;">
-      <div class="status-pill">
-        <div class="status-dot"></div> Always building
-      </div>
-    </div>
-
-    <div id="projects" class="projects-container">
-      <h2 class="section-headline serif-txt">Featured Systems</h2>
-
-      <div class="project-item">
-        <h3>Cooling System - New Green Energy Chad (Final Year Project)</h3>
-        <p>An innovative control system developed for my final year project. It utilizes JavaScript to monitor and regulate eco-friendly cooling systems specifically designed for green energy initiatives in Chad.</p>
-      </div>
-
-      <div class="project-item">
-        <h3>Pharmacy Management System</h3>
-        <p>A comprehensive, robust Java application designed to streamline healthcare workflows. It manages pharmacy inventory, tracks medication stock-levels, and processes high-intensity transactions with a secure backend.</p>
-      </div>
-
-      <div class="project-item">
-        <h3>Volunteer Coordination System (Full-Stack)</h3>
-        <p>A full-stack distributed system built in Java allowing administrators to automate the scheduling, tracking, and seamless coordination of volunteer resources across various community events.</p>
-      </div>
-      
-      <div class="project-item">
-        <h3>Student Grade Management</h3>
-        <p>A responsive web platform designed to efficiently manage student databases, calculate grade metrics, track course enrollments, and evaluate overall academic performance.</p>
-      </div>
-
-      <div class="project-item">
-        <h3>Bus Management System</h3>
-        <p>A robust digital platform for public transportation. It features an intuitive web interface for scheduling bus routes, dynamically managing passenger ticketing, and overseeing daily transit operations.</p>
-      </div>
-
-    </div>
-
-    <!-- Footer -->
-    <footer>
-      <div class="footer-left">
-        <div class="script-quote">Humanity has come this far because of curiosity</div>
-        <div>© 2025 Gali Abdias Ndaga. All rights reserved.</div>
-      </div>
-      <div class="footer-right">
-        <!-- SVG Icons for minimal social presence -->
-        <a href="#"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a>
-        <a href="mailto:galiabdiasndaga@yahoo.com" class="contact-pill">
-          Contact
-        </a>
-      </div>
-    </footer>
-
   </div>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero" id="hero">
+    <div class="wrapper">
+      <div class="hero-grid">
+        <div>
+          <div class="hero-badge">
+            <span class="hero-badge-dot"></span>
+            Available for Internships & Projects
+          </div>
+          <h1 class="hero-title">Gali Abdias<br>Ndaga.</h1>
+          <p class="hero-desc">
+            Software Engineering student building reliable, scalable systems using Java, React, SQL,
+            and modern web technologies. Passionate about clean code, real-world impact, and continuous growth.
+          </p>
+          <div class="hero-btns">
+            <a href="#projects" class="btn-primary">View My Work →</a>
+            <a href="#about" class="btn-outline">About Me</a>
+          </div>
+        </div>
+        <div class="hero-photo-card glass">
+          <img src="homepage.jpg" alt="Gali Abdias Ndaga" class="hero-photo" />
+          <div class="hero-stats">
+            <div class="stat-chip">
+              <span class="num">5+</span>
+              <span class="lbl">Projects</span>
+            </div>
+            <div class="stat-chip">
+              <span class="num">8+</span>
+              <span class="lbl">Certifications</span>
+            </div>
+            <div class="stat-chip">
+              <span class="num">3</span>
+              <span class="lbl">Languages</span>
+            </div>
+            <div class="stat-chip">
+              <span class="num">2026</span>
+              <span class="lbl">Graduating</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ABOUT ===== -->
+  <section id="about">
+    <div class="wrapper">
+      <div class="section-header-row" style="margin-bottom: 32px;">
+        <div>
+          <div class="section-kicker">About Me</div>
+          <h2 class="section-title">Who I Am</h2>
+        </div>
+      </div>
+      <div class="glass about-strip">
+        <div class="about-mono-tag">// gali_abdias_ndaga.profile</div>
+        <p class="about-text">
+          I'm a <strong>Computer Science & Software Engineering student</strong> at the Adventist University of Central Africa (AUCA), expected to graduate in 2026.
+          I am proficient in <strong>Java (Spring Boot)</strong>, <strong>SQL (PostgreSQL)</strong>, and modern web technologies including <strong>JavaScript, React JS, HTML, and CSS</strong>.
+        </p>
+        <p class="about-text">
+          Experienced using <strong>GitHub and GitLab</strong> for version control in fast-paced team environments. I am highly analytical, detail-oriented, and proactive —
+          continuously learning tools and methodologies to build high-quality, impactful software solutions.
+        </p>
+        <a href="mailto:galiabdiasndaga@yahoo.com" class="btn-primary">Get in Touch →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SKILLS ===== -->
+  <section id="skills">
+    <div class="wrapper">
+      <div class="section-header-row">
+        <div>
+          <div class="section-kicker">Expertise</div>
+          <h2 class="section-title">Skills & Tech</h2>
+          <p class="section-subtitle">Core areas I build in, and the specific tools I use daily.</p>
+        </div>
+      </div>
+      <div class="skills-grid">
+
+        <div class="glass skill-card">
+          <div class="skill-icon">
+            <svg viewBox="0 0 24 24"><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          </div>
+          <div class="skill-name">Backend Development</div>
+          <p style="font-size:0.875rem">Building robust APIs, services, and system backends with a focus on reliability and clean architecture.</p>
+          <div class="skill-tags">
+            <span class="skill-tag">Java</span>
+            <span class="skill-tag">Spring Boot</span>
+            <span class="skill-tag">SQL</span>
+            <span class="skill-tag">PostgreSQL</span>
+            <span class="skill-tag">RMI</span>
+          </div>
+        </div>
+
+        <div class="glass skill-card">
+          <div class="skill-icon">
+            <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><polyline points="8 21 12 17 16 21"/></svg>
+          </div>
+          <div class="skill-name">Frontend & Web</div>
+          <p style="font-size:0.875rem">Creating clean, accessible, and visually engaging user interfaces with modern frameworks and vanilla tech.</p>
+          <div class="skill-tags">
+            <span class="skill-tag">React JS</span>
+            <span class="skill-tag">JavaScript</span>
+            <span class="skill-tag">HTML5</span>
+            <span class="skill-tag">CSS3</span>
+          </div>
+        </div>
+
+        <div class="glass skill-card">
+          <div class="skill-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+          </div>
+          <div class="skill-name">Tools & Practices</div>
+          <p style="font-size:0.875rem">Collaborating effectively using industry-standard version control workflows and leadership skills.</p>
+          <div class="skill-tags">
+            <span class="skill-tag">GitHub</span>
+            <span class="skill-tag">GitLab</span>
+            <span class="skill-tag">Leadership</span>
+            <span class="skill-tag">Agile</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== EXPERIENCE / EDUCATION ===== -->
+  <section>
+    <div class="wrapper">
+      <div class="section-header-row">
+        <div>
+          <div class="section-kicker">Background</div>
+          <h2 class="section-title">Education & Experience</h2>
+        </div>
+      </div>
+      <div class="glass about-strip">
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-year">2023 — 2026</div>
+            <div class="timeline-role">Software Engineering, B.Sc.</div>
+            <div class="timeline-org">Adventist University of Central Africa (AUCA) — Expected Graduation 2026</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-year">2025</div>
+            <div class="timeline-role">Software Engineering Internship</div>
+            <div class="timeline-org">TrialTech — 3-month internship in Software Engineering</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-year">2021 — 2022</div>
+            <div class="timeline-role">High School Diploma</div>
+            <div class="timeline-org">Secondary education completed</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-year">2020 — 2021</div>
+            <div class="timeline-role">English Internship</div>
+            <div class="timeline-org">U.S Embassy N'Djamena, Chad</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-year">2018 — 2020</div>
+            <div class="timeline-role">Intensive English Training Program</div>
+            <div class="timeline-org">Sponsored by the United States of America</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PROJECTS ===== -->
+  <div class="status-row">
+    <div class="status-pill"><span class="status-dot"></span> Always building something new</div>
+  </div>
+
+  <section id="projects">
+    <div class="wrapper">
+      <div class="section-header-row">
+        <div>
+          <div class="section-kicker">Work</div>
+          <h2 class="section-title">Featured Projects</h2>
+          <p class="section-subtitle">Systems I have designed and built from scratch.</p>
+        </div>
+        <a href="https://github.com/Gali-Abdias" target="_blank" class="btn-outline" style="flex-shrink:0">GitHub Profile ↗</a>
+      </div>
+
+      <div class="projects-grid">
+
+        <div class="glass project-card">
+          <div class="project-top">
+            <div class="project-icon" style="background:rgba(16,185,129,.12); border:1px solid rgba(16,185,129,.25)">🌿</div>
+            <svg class="project-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+          </div>
+          <div class="project-name">Cooling System — New Green Energy Chad</div>
+          <p class="project-desc">Final year project — an innovative JavaScript-powered control system to monitor and regulate eco-friendly cooling infrastructure for green energy initiatives across Chad.</p>
+          <div class="project-tech">
+            <span class="tech-badge badge-js">JavaScript</span>
+            <span class="tech-badge badge-html">HTML/CSS</span>
+          </div>
+        </div>
+
+        <div class="glass project-card">
+          <div class="project-top">
+            <div class="project-icon" style="background:rgba(239,68,68,.12); border:1px solid rgba(239,68,68,.25)">💊</div>
+            <svg class="project-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+          </div>
+          <div class="project-name">Pharmacy Management System</div>
+          <p class="project-desc">A comprehensive Java application that streamlines healthcare workflows, manages inventory, tracks medication stock levels, and handles high-intensity pharmacological transactions.</p>
+          <div class="project-tech">
+            <span class="tech-badge badge-java">Java</span>
+            <span class="tech-badge badge-sql">SQL</span>
+          </div>
+        </div>
+
+        <div class="glass project-card">
+          <div class="project-top">
+            <div class="project-icon" style="background:rgba(168,85,247,.12); border:1px solid rgba(168,85,247,.25)">🤝</div>
+            <svg class="project-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+          </div>
+          <div class="project-name">Volunteer Coordination System</div>
+          <p class="project-desc">Full-stack distributed application built in Java using RMI. Automates scheduling of volunteer resources, tracks participation, and coordinates logistics for community events at scale.</p>
+          <div class="project-tech">
+            <span class="tech-badge badge-java">Java</span>
+            <span class="tech-badge badge-rmi">RMI</span>
+            <span class="tech-badge badge-sql">SQL</span>
+          </div>
+        </div>
+
+        <div class="glass project-card">
+          <div class="project-top">
+            <div class="project-icon" style="background:rgba(234,179,8,.12); border:1px solid rgba(234,179,8,.25)">📊</div>
+            <svg class="project-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+          </div>
+          <div class="project-name">Student Grade Management</div>
+          <p class="project-desc">A responsive web platform for managing student records, calculating grade metrics, tracking enrollments, and evaluating academic performance across multiple courses and semesters.</p>
+          <div class="project-tech">
+            <span class="tech-badge badge-html">HTML</span>
+            <span class="tech-badge badge-js">JavaScript</span>
+          </div>
+        </div>
+
+        <div class="glass project-card" style="grid-column: span 1;">
+          <div class="project-top">
+            <div class="project-icon" style="background:rgba(6,182,212,.12); border:1px solid rgba(6,182,212,.25)">🚌</div>
+            <svg class="project-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+          </div>
+          <div class="project-name">Bus Management System</div>
+          <p class="project-desc">A robust digital platform for public transportation management. Features scheduling of bus routes, dynamic passenger ticketing, seat management, and real-time transit operations oversight.</p>
+          <div class="project-tech">
+            <span class="tech-badge badge-html">HTML</span>
+            <span class="tech-badge badge-js">JavaScript</span>
+            <span class="tech-badge badge-sql">SQL</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CERTIFICATIONS & PROFILE ===== -->
+  <section>
+    <div class="wrapper">
+      <div class="section-header-row" style="margin-bottom: 32px;">
+        <div>
+          <div class="section-kicker">More</div>
+          <h2 class="section-title">Certifications & Profile</h2>
+        </div>
+      </div>
+      <div class="info-columns">
+
+        <div class="glass info-card">
+          <div class="info-card-title">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+            Certifications
+          </div>
+          <ul class="cert-list">
+            <li class="cert-item"><span class="cert-dot"></span>FreeCodeCamp — Responsible Web Design</li>
+            <li class="cert-item"><span class="cert-dot"></span>FreeCodeCamp — JavaScript Algorithms</li>
+            <li class="cert-item"><span class="cert-dot"></span>Udemy — Java with Spring Boot</li>
+            <li class="cert-item"><span class="cert-dot"></span>Cisco — Operating System Basics</li>
+            <li class="cert-item"><span class="cert-dot"></span>Cisco — Networking Essentials</li>
+            <li class="cert-item"><span class="cert-dot"></span>Aspire Institute — Leadership Program</li>
+            <li class="cert-item"><span class="cert-dot"></span>Intensive American English Certification</li>
+            <li class="cert-item"><span class="cert-dot"></span>English Proficiency 1 & 2</li>
+          </ul>
+        </div>
+
+        <div class="glass info-card">
+          <div class="info-card-title">
+            <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            Profile
+          </div>
+          <div class="profile-rows">
+            <div class="profile-row">
+              <span class="profile-label">English</span>
+              <div class="lang-bar"><div class="lang-fill" style="width:85%"></div></div>
+              <span style="font-size:0.8rem; color:var(--text-faint); min-width:35px; text-align:right">85%</span>
+            </div>
+            <div class="profile-row">
+              <span class="profile-label">French</span>
+              <div class="lang-bar"><div class="lang-fill" style="width:85%"></div></div>
+              <span style="font-size:0.8rem; color:var(--text-faint); min-width:35px; text-align:right">85%</span>
+            </div>
+            <div class="profile-row">
+              <span class="profile-label">Arabic</span>
+              <div class="lang-bar"><div class="lang-fill" style="width:50%"></div></div>
+              <span style="font-size:0.8rem; color:var(--text-faint); min-width:35px; text-align:right">50%</span>
+            </div>
+          </div>
+          <div style="margin-top: 24px; border-top: 1px solid var(--border); padding-top: 20px;">
+            <div class="cert-item" style="margin-bottom: 10px;"><span class="cert-dot" style="background: var(--accent-2)"></span><strong>Nationality:</strong>&nbsp;Chadian</div>
+            <div class="cert-item" style="margin-bottom: 10px;"><span class="cert-dot" style="background: var(--accent-2)"></span><strong>D.O.B:</strong>&nbsp;03 / 12 / 2004</div>
+            <div class="cert-item" style="margin-bottom: 10px;"><span class="cert-dot" style="background: var(--accent-2)"></span><strong>Hobbies:</strong>&nbsp;Coding, Music, Basketball</div>
+            <div class="cert-item"><span class="cert-dot" style="background: var(--accent-2)"></span><strong>GitHub:</strong>&nbsp;<a href="https://github.com/Gali-Abdias" target="_blank" style="color: var(--accent-2); text-decoration: underline;">Gali-Abdias</a></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="wrapper footer-inner">
+      <div>
+        <div class="footer-quote">Humanity has come this far because of curiosity</div>
+        <div class="footer-copy">© 2026 Gali Abdias Ndaga. All rights reserved.</div>
+      </div>
+      <div class="footer-links">
+        <a href="https://github.com/Gali-Abdias" target="_blank" class="footer-link" aria-label="GitHub">
+          <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+        </a>
+        <a href="mailto:galiabdiasndaga@yahoo.com" class="footer-cta">Contact Me →</a>
+      </div>
+    </div>
+  </footer>
 
 </body>
 </html>
