@@ -856,20 +856,156 @@
     @media (max-width: 640px) {
       section { padding: 64px 0; }
       .hero-title { font-size: 2.5rem; }
+      .hero-desc { font-size: 1rem; }
       .skills-grid { grid-template-columns: 1fr; }
-      
-      .nav-logo-name, .nav-logo-tag, .nav-contact-btn { display: none; }
-      nav { max-width: 65%; }
-      nav ul {
-        display: flex;
-        overflow-x: auto;
-        padding-bottom: 5px;
-      }
-      nav ul li a { padding: 6px 10px; }
-      
-      .about-strip { padding: 32px; }
+      nav { display: none; }
+      .nav-contact-btn { display: none; }
+      .hamburger-btn { display: flex !important; }
+      .about-strip { padding: 24px; }
       .section-header-row { flex-direction: column; align-items: flex-start; }
       .values-grid { grid-template-columns: 1fr; }
+      .info-columns { grid-template-columns: 1fr; }
+      .hero-grid { gap: 32px; }
+      .hero-photo-card { max-width: 100%; }
+    }
+
+    /* === HAMBURGER BUTTON === */
+    .hamburger-btn {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .hamburger-btn:hover { background: var(--surface-hover); border-color: var(--border-glow); }
+    .hamburger-btn svg { width: 20px; height: 20px; stroke: currentColor; stroke-width: 2; stroke-linecap: round; fill: none; }
+
+    /* === MOBILE DRAWER === */
+    .mobile-drawer-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+    }
+    .mobile-drawer-overlay.open {
+      display: block;
+    }
+    .mobile-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 80%;
+      max-width: 320px;
+      background: var(--bg);
+      border-left: 1px solid var(--border);
+      z-index: 1000;
+      transform: translateX(100%);
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
+      padding: 0;
+    }
+    .mobile-drawer.open {
+      transform: translateX(0);
+    }
+    .drawer-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--border);
+    }
+    .drawer-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .drawer-logo img {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--border-glow);
+    }
+    .drawer-logo-name {
+      font-family: var(--heading);
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text);
+    }
+    .drawer-close {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .drawer-close svg { width: 18px; height: 18px; stroke: currentColor; stroke-width: 2; stroke-linecap: round; fill: none; }
+    .drawer-nav {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 24px 16px;
+      gap: 6px;
+    }
+    .drawer-nav a {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 18px;
+      border-radius: 14px;
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      font-weight: 600;
+      transition: background 0.2s, color 0.2s;
+      border: 1px solid transparent;
+    }
+    .drawer-nav a:hover, .drawer-nav a.active-link {
+      background: var(--surface-hover);
+      border-color: var(--border);
+      color: var(--text);
+    }
+    .drawer-nav a .drawer-nav-icon {
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      background: rgba(168,85,247,0.1);
+      border: 1px solid rgba(168,85,247,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .drawer-footer {
+      padding: 20px 24px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .drawer-footer a {
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 10px 20px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-3));
+      color: white;
+      display: inline-block;
     }
     /* === Theme Toggle Button === */
     .theme-toggle {
@@ -939,8 +1075,47 @@
           <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
           <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
         </button>
-        <a href="mailto:galiabdiasndaga@yahoo.com" class="nav-contact-btn">Hire Me →</a>
+        <a href="mailto:galiabdiasndaga@yahoo.com" class="nav-contact-btn">Hire Me &rarr;</a>
+        <!-- Hamburger for mobile -->
+        <button class="hamburger-btn" id="hamburger-btn" aria-label="Open menu" onclick="openDrawer()">
+          <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
       </div>
+    </div>
+  </div>
+
+  <!-- ===== MOBILE DRAWER ===== -->
+  <div class="mobile-drawer-overlay" id="drawer-overlay" onclick="closeDrawer()"></div>
+  <div class="mobile-drawer" id="mobile-drawer">
+    <div class="drawer-header">
+      <div class="drawer-logo">
+        <img src="photo.png" alt="Gali" />
+        <span class="drawer-logo-name">Gali Ndaga</span>
+      </div>
+      <button class="drawer-close" onclick="closeDrawer()">
+        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <nav class="drawer-nav">
+      <a href="#hero" class="nav-link drawer-link active-link">
+        <span class="drawer-nav-icon">🏠</span> Home
+      </a>
+      <a href="#about" class="nav-link drawer-link">
+        <span class="drawer-nav-icon">👤</span> About
+      </a>
+      <a href="#skills" class="nav-link drawer-link">
+        <span class="drawer-nav-icon">⚡</span> Skills
+      </a>
+      <a href="#projects" class="nav-link drawer-link">
+        <span class="drawer-nav-icon">🚀</span> Projects
+      </a>
+    </nav>
+    <div class="drawer-footer">
+      <a href="mailto:galiabdiasndaga@yahoo.com">Hire Me &rarr;</a>
+      <button class="theme-toggle" style="position:relative;" aria-label="Toggle theme" onclick="toggleTheme()">
+        <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      </button>
     </div>
   </div>
 
@@ -1524,6 +1699,31 @@
       if(hash && document.querySelector('.page-section[data-page="' + hash + '"]')) {
         navigateToPage(hash);
       }
+    });
+    // === Mobile Drawer ===
+    function openDrawer() {
+      document.getElementById('drawer-overlay').classList.add('open');
+      document.getElementById('mobile-drawer').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeDrawer() {
+      document.getElementById('drawer-overlay').classList.remove('open');
+      document.getElementById('mobile-drawer').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    // Make drawer links also navigate
+    document.querySelectorAll('.drawer-link').forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const pageId = this.getAttribute('href').substring(1);
+        navigateToPage(pageId);
+        history.pushState(null, null, '#' + pageId);
+        // Update active state in drawer too
+        document.querySelectorAll('.drawer-link').forEach(l => l.classList.remove('active-link'));
+        this.classList.add('active-link');
+        closeDrawer();
+      });
     });
 
   </script>
