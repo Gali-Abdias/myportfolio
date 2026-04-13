@@ -6,7 +6,7 @@
   <title>Gali Abdias Ndaga | Builder</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #030014;
@@ -15,8 +15,8 @@
       --text-main: #ffffff;
       --text-muted: #a3a3bd;
       --sans: 'Inter', sans-serif;
-      --serif: 'Playfair Display', serif;
-      --script: 'Caveat', cursive;
+      --heading: 'Outfit', sans-serif;
+      --mono: 'Space Mono', monospace;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -27,15 +27,18 @@
       background-color: var(--bg);
       color: var(--text-muted);
       font-family: var(--sans);
-      line-height: 1.6;
+      line-height: 1.7;
+      font-size: 1.05rem;
       padding-bottom: 100px;
       -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
     h1, h2, h3, .serif-txt {
-      font-family: var(--serif);
+      font-family: var(--heading);
       color: var(--text-main);
-      font-weight: 700;
+      font-weight: 800;
+      letter-spacing: -0.02em;
     }
 
     a { text-decoration: none; color: inherit; }
@@ -70,18 +73,21 @@
     }
 
     .logo-text {
-      font-family: var(--sans);
-      font-size: 1.5rem;
+      font-family: var(--heading);
+      font-size: 1.8rem;
       font-weight: 800;
       color: var(--text-main);
-      letter-spacing: -0.5px;
+      letter-spacing: -1px;
     }
 
     .logo-script {
-      font-family: var(--script);
-      font-size: 1.2rem;
-      color: var(--text-muted);
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: #00ffff;
+      text-transform: uppercase;
+      letter-spacing: 2px;
       margin-top: 4px;
+      opacity: 0.8;
     }
 
     nav {
@@ -143,15 +149,21 @@
     }
 
     .hero-title {
-      font-size: clamp(3rem, 6vw, 4.5rem);
-      line-height: 1;
+      font-size: clamp(3.5rem, 8vw, 5rem);
+      line-height: 1.1;
       margin-bottom: 25px;
-      letter-spacing: -1px;
+      letter-spacing: -2px;
+      background: linear-gradient(to right, #ffffff, #a3a3bd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0px 4px 40px rgba(255, 255, 255, 0.15);
     }
 
     .hero-desc {
-      font-size: 1.05rem;
+      font-size: 1.2rem;
+      line-height: 1.8;
       max-width: 650px;
+      color: rgba(255, 255, 255, 0.85);
     }
 
     /* --- Bio Card --- */
@@ -174,11 +186,13 @@
     .bio-content { flex: 1; }
 
     .bio-script {
-      font-family: var(--script);
-      font-size: 1.8rem;
-      color: var(--text-main);
-      margin-bottom: 15px;
-      line-height: 1.2;
+      font-family: var(--mono);
+      font-size: 1rem;
+      color: #ff00ff;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 20px;
+      opacity: 0.9;
     }
 
     .bio-text { margin-bottom: 15px; font-size: 0.95rem; }
@@ -337,10 +351,12 @@
     }
 
     .footer-left .script-quote {
-      font-family: var(--script);
-      font-size: 1.4rem;
-      color: var(--text-muted);
-      margin-bottom: 4px;
+      font-family: var(--mono);
+      font-size: 0.9rem;
+      color: #00ffff;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 8px;
     }
 
     .footer-right {
