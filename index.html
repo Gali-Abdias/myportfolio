@@ -964,32 +964,18 @@
       gap: 6px;
     }
     .drawer-nav a {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 14px 18px;
-      border-radius: 14px;
+      display: block;
+      padding: 16px 20px;
+      border-radius: 12px;
       color: var(--text-muted);
-      font-size: 1.05rem;
+      font-size: 1.1rem;
       font-weight: 600;
       transition: background 0.2s, color 0.2s;
-      border: 1px solid transparent;
+      letter-spacing: -0.2px;
     }
     .drawer-nav a:hover, .drawer-nav a.active-link {
       background: var(--surface-hover);
-      border-color: var(--border);
       color: var(--text);
-    }
-    .drawer-nav a .drawer-nav-icon {
-      width: 36px; height: 36px;
-      border-radius: 10px;
-      background: rgba(168,85,247,0.1);
-      border: 1px solid rgba(168,85,247,0.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.1rem;
-      flex-shrink: 0;
     }
     .drawer-footer {
       padding: 20px 24px;
@@ -1097,18 +1083,10 @@
       </button>
     </div>
     <nav class="drawer-nav">
-      <a href="#hero" class="nav-link drawer-link active-link">
-        <span class="drawer-nav-icon">🏠</span> Home
-      </a>
-      <a href="#about" class="nav-link drawer-link">
-        <span class="drawer-nav-icon">👤</span> About
-      </a>
-      <a href="#skills" class="nav-link drawer-link">
-        <span class="drawer-nav-icon">⚡</span> Skills
-      </a>
-      <a href="#projects" class="nav-link drawer-link">
-        <span class="drawer-nav-icon">🚀</span> Projects
-      </a>
+      <a href="#hero" class="nav-link drawer-link active-link">Home</a>
+      <a href="#about" class="nav-link drawer-link">About</a>
+      <a href="#skills" class="nav-link drawer-link">Skills</a>
+      <a href="#projects" class="nav-link drawer-link">Projects</a>
     </nav>
     <div class="drawer-footer">
       <a href="mailto:galiabdiasndaga@yahoo.com">Hire Me &rarr;</a>
