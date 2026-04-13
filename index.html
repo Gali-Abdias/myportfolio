@@ -212,11 +212,14 @@
     
     /* === SPA ANIMATIONS === */
     .page-section {
-      display: none;
+      display: none !important;
       animation: fadeIn 0.4s ease forwards;
     }
     .page-section.active-page {
-      display: block;
+      display: block !important;
+    }
+    .hero.active-page {
+      display: flex !important;
     }
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
