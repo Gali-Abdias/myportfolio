@@ -829,6 +829,17 @@
       box-shadow: 0 0 8px #10b981;
       animation: blink 2s ease-in-out infinite;
     }
+    .work-mission-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+      margin-bottom: 22px;
+    }
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
 
     /* ===========================
        RESPONSIVE
@@ -844,8 +855,18 @@
     }
     @media (max-width: 640px) {
       section { padding: 64px 0; }
+      .hero-title { font-size: 2.5rem; }
       .skills-grid { grid-template-columns: 1fr; }
-      nav ul { display: none; }
+      
+      .nav-logo-name, .nav-logo-tag, .nav-contact-btn { display: none; }
+      nav { max-width: 65%; }
+      nav ul {
+        display: flex;
+        overflow-x: auto;
+        padding-bottom: 5px;
+      }
+      nav ul li a { padding: 6px 10px; }
+      
       .about-strip { padding: 32px; }
       .section-header-row { flex-direction: column; align-items: flex-start; }
       .values-grid { grid-template-columns: 1fr; }
@@ -1002,7 +1023,7 @@
       </div>
 
       <!-- Work + Mission row -->
-      <div class="work-mission-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:22px; margin-bottom:22px;">
+      <div class="work-mission-grid">
 
         <div class="glass about-strip">
           <div class="about-mono-tag" style="display:flex; align-items:center; gap:8px;">
@@ -1047,7 +1068,7 @@
       <!-- Core Values -->
       <div class="glass about-strip" style="padding:40px;">
         <h3 style="font-family:var(--heading); font-size:1.6rem; font-weight:800; color:var(--text); letter-spacing:-0.03em; margin-bottom:28px;">Core Values</h3>
-        <div class="values-grid" style="display:grid; grid-template-columns:repeat(3,1fr); gap:14px;">
+        <div class="values-grid">
 
           <div style="background:var(--surface-hover); border:1px solid var(--border); border-radius:14px; padding:18px 20px;">
             <div style="font-family:var(--heading); font-weight:700; color:var(--text); font-size:0.95rem; margin-bottom:6px;">Integrity</div>
